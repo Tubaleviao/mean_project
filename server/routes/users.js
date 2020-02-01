@@ -10,7 +10,7 @@ router.get('/', function(req, res, next) {
         });
 });
 
-// /* GET user, find one. */
+/* GET user, find one. */
 router.get("/:username", (req, res) => {
   const query = { username: req.params.username };
   req.db.collection('users').find(query).toArray((error, document) => {
@@ -21,17 +21,21 @@ router.get("/:username", (req, res) => {
 
 /* POST creating users */
 router.post('/create', function(req, res, next){
-  //req.db.insert({ 'username': req.body.username, 'password': req.body.password, 'email': req.body.email}, (err, data) => {
-      res.json({ userId:'_id' })
-  //});
+  var new_user = req.body;
+  req.db.insertOne( new_user, (err, user_inserted) => {
+    if(error) throw error;
+    res.end("Congratulations, user successfully added \n" + user_inserted);
+  });
 })
 
-router.put('/:id/update', function(req, res, next){
+router.put('/update/:id/', function(req, res, next){
   
 })
 
-router.delete('/:id/remove', function(req, res, next){
-  
+router.delete('/remove/:username', function(req, res, next){
+  const query = { course: req.params.username };
+  collection.deleteOne(query);
+  res.send(`User successfully deleted`);
 })
 
 module.exports = router;
