@@ -3,12 +3,14 @@ var path = require('path');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+const {database} = require('./middlewares')
 
 var app = express();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(database)
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
@@ -19,3 +21,5 @@ app.use(function(err, req, res, next) {
 });
 
 module.exports = app;
+
+
