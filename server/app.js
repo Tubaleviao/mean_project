@@ -3,7 +3,7 @@ var path = require('path');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
-const {database} = require('./middleware')
+const {database} = require('./middlewares')
 
 var app = express();
 
@@ -21,3 +21,5 @@ app.use(function(err, req, res, next) {
 });
 
 module.exports = app;
+
+
