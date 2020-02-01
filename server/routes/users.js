@@ -1,4 +1,7 @@
 var express = require('express');
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt')
+const {auth} = require('../middlewares')
 var router = express.Router();
 
 /* GET users listing. */
@@ -41,6 +44,20 @@ router.delete('/remove/:username', function(req, res, next){
   const query = { course: req.params.username };
   collection.deleteOne(query);
   res.send(`User successfully deleted`);
+})
+  
+router.get('/jwt', (req,res) => {
+  bcrypt.hash('comming_from_req', 10, (err, hash) => {
+      var token = jwt.sign({ 
+          username: 'user',
+          password: hash
+      }, process.env.JWT_KEY);
+      res.json({token})
+  });
+})
+
+router.get('/protected', auth, (req,res) => {
+  res.json(req.userinfo)
 })
 
 module.exports = router;

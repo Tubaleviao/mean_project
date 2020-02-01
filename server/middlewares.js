@@ -17,6 +17,7 @@ const database = async (req, res, next) => {
 const auth = async (req, res, next) => {
     try{
         let json = verify(req.headers.token, process.env.JWT_KEY)
+        req.userinfo = json
         next()
     }catch(err){
         next({msg: "token not valid", error: err})
