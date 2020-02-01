@@ -1,6 +1,7 @@
 var express = require('express');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt')
+const {auth} = require('../middlewares')
 var router = express.Router();
 
 /* GET users listing. */
@@ -49,7 +50,7 @@ router.get('/jwt', (req,res) => {
 })
 
 router.get('/protected', auth, (req,res) => {
-  res.json({secret: "extremely secret stuff"})
+  res.json(req.userinfo)
 })
 
 module.exports = router;
