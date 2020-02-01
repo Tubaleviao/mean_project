@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
@@ -6,6 +7,15 @@ var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+=======
+require('dotenv').config()
+const express = require('express')
+const cors = require('cors')
+
+const app = express()
+app.use(cors())
+
+>>>>>>> ecde9fa214efca5f0a8db59f6b57d6c87c1c71ff
 
 var app = express();
 

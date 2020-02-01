@@ -1,4 +1,5 @@
 {
+<<<<<<< HEAD
   "name": "exp-server",
   "version": "0.0.0",
   "private": true,
@@ -13,4 +14,18 @@
     "jade": "~1.11.0",
     "morgan": "~1.9.1"
   }
+=======
+  "name": "locator",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "api"
+  ],
+  "author": "Tubaleviao",
+  "license": "ISC"
+>>>>>>> ecde9fa214efca5f0a8db59f6b57d6c87c1c71ff
 }
