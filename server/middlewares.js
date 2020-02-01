@@ -7,7 +7,6 @@ let db
 
 const database = async (req, res, next) => {
     if(!db){
-        console.log(process.env.DB_HOST)
         const worked = await client.connect()
         db = client.db('project')
     }

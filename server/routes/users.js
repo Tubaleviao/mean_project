@@ -20,12 +20,17 @@ router.get("/:username", (req, res) => {
 });
 
 /* POST creating users */
-router.post('/create', function(req, res, next){
+router.post('/signup', function(req, res, next){
   var new_user = req.body;
   req.db.insertOne( new_user, (err, user_inserted) => {
     if(error) throw error;
     res.end("Congratulations, user successfully added \n" + user_inserted);
   });
+})
+
+/* POST signin users */
+router.post('/signin', function(req, res, next){
+  
 })
 
 router.put('/update/:id/', function(req, res, next){
