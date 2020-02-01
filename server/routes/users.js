@@ -28,9 +28,9 @@ router.post('/create', function(req, res, next){
   });
 })
 
-router.put('/users/:id/update', function(req, res, next){
+// router.put('/users/:id/update', function(req, res, next){
   
-})
+// })
 
 router.delete('/:id/reserve/:reservation_id', function(req, res, next){
   
