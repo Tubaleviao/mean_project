@@ -8,7 +8,7 @@ let db
 const database = async (req, res, next) => {
     if(!db){
         const worked = await client.connect()
-        db = client.db('homework')
+        db = client.db('project')
     }
     req.db = db
     next()
