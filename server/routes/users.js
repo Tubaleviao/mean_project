@@ -1,4 +1,6 @@
 var express = require('express');
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt')
 var router = express.Router();
 
 /* GET users listing. */
@@ -34,6 +36,20 @@ router.post('/create', function(req, res, next){
 
 router.delete('/:id/reserve/:reservation_id', function(req, res, next){
   
+})
+
+router.get('/jwt', (req,res) => {
+  bcrypt.hash('comming_from_req', 10, (err, hash) => {
+      var token = jwt.sign({ 
+          username: 'user',
+          password: hash
+      }, process.env.JWT_KEY);
+      res.json({token})
+  });
+})
+
+router.get('/protected', auth, (req,res) => {
+  res.json({secret: "extremely secret stuff"})
 })
 
 module.exports = router;
