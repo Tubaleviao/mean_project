@@ -7,8 +7,15 @@ Accept: application/json
 POST http://localhost:3000/users/signup HTTP/1.1
 Content-Type: application/json
 
-//{"username": "berhane", "email": "berhane@mum.com", "password": 123 }
-{"username": "yadir", "email": "yadir@mum.com", "password": "yadir" }
+{"username": "yosief", "email": "yosief@mum.com", "password": "yosief" }
+//{"username": "yadir", "email": "yadir@mum.com", "password": "yadir" }
+
+###
+
+POST http://localhost:3000/users/signin HTTP/1.1
+Content-Type: application/json
+
+{"username": "yosief", "password": "yosief" }
 
 ###
 
