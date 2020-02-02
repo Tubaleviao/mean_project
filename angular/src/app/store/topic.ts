@@ -1,5 +1,5 @@
-export interface IUser{
-    username: string
-    email: string
-    friends: string[]
+export interface IUser {
+  username: string;
+  email: string;
+  friends: string[];
 }

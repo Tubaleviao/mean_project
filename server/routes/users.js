@@ -5,6 +5,7 @@ const { auth } = require('../middlewares')
 var router = express.Router();
 const joi = require('@hapi/joi');
 
+
 /* GET: users listing. */
 router.get('/', function(req, res, next) {
   //res.json({msg:"something"})
@@ -25,9 +26,11 @@ router.get("/:username", (req, res) => {
 
 /* POST: signup users */
 router.post('/signup', async function(req, res, next){
+  
+  // checking validation
+  // const { error } = signupValidation(req.body);
+  // if (error) return res.status(400).json({message: error.details[0].message});
 
-  const { error } = signupValidation(req.body);
-  if (error) return res.status(400).json({message: error.details[0].message});
 
   const email_exist = await req.db.collection('users').findOne({ email: req.body.email });
   if (email_exist) return res.status(400).json({message :"This email is already taken!"});
