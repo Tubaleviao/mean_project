@@ -8,7 +8,7 @@
         <form class="auth-form" [formGroup]="signInForm" (ngSubmit)="onSubmit()">
             <mat-card-content>
                 <mat-form-field class="full-width">
-                    <input id="username" matInput placeholder="Username" formControlName="username" required>
+                    <input id="username" matInput placeholder="Username" formControlName="username" required />
                     <div *ngIf="username.invalid && (username.dirty || username.touched)" class="alert alert-danger">
                         <div *ngIf="username.errors.required">
                             Username is required.
@@ -21,7 +21,7 @@
 
                 <mat-form-field class="full-width">
                     <input id="password" type="password" matInput placeholder="Password" formControlName="password"
-                        required>
+                        required />
                     <div *ngIf="password.invalid && (password.dirty || password.touched)" class="alert alert-danger">
                         <div *ngIf="password.errors.required">
                             Password is required.
