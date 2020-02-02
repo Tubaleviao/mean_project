@@ -20,12 +20,15 @@
 
                 <mat-form-field class="full-width">
                     <input id="email" type="email" matInput placeholder="Email" formControlName="email" required />
-                    <div *ngIf="email.invalid && (email.dirty || email.touched)" class="alert alert-danger">
+                    <div *ngIf="email.invalid && (email.dirty || email.touched)" class="help is-danger">
                         <div *ngIf="email.errors.required">
                             Email is required.
                         </div>
                         <div *ngIf="email.errors.email">
                             Email must be a valid address.
+                        </div>
+                        <div class="help is-danger" *ngIf="email.errors.existingEmail">
+                            Email already exists.
                         </div>
                     </div>
                 </mat-form-field>
@@ -33,7 +36,7 @@
                 <mat-form-field class="full-width">
                     <input id="password" type="password" matInput placeholder="Password" formControlName="password"
                         required />
-                    <div *ngIf="password.invalid && (password.dirty || password.touched)" class="alert alert-danger">
+                    <div *ngIf="password.invalid && (password.dirty || password.touched)" class="help is-danger">
                         <div *ngIf="password.errors.required">
                             Password is required.
                         </div>

@@ -6,7 +6,7 @@ import {
   FormControl
 } from "@angular/forms";
 import { AskService } from "src/app/services/ask.service";
-import { Observable } from "rxjs";
+import { AsyncUniqueEmailValidator } from "src/app/validators/async-unique-email";
 
 @Component({
   selector: "app-sign-up",
@@ -18,13 +18,21 @@ export class SignUpComponent implements OnInit {
 
   signUpForm: FormGroup;
 
-  constructor(private fb: FormBuilder, private ask: AskService) {
+  constructor(
+    private fb: FormBuilder,
+    private ask: AskService,
+    emailValidator: AsyncUniqueEmailValidator
+  ) {
     this.signUpForm = this.fb.group({
       username: ["", [Validators.required, Validators.minLength(4)]],
       password: ["", [Validators.required, Validators.minLength(8)]],
       email: [
         "",
-        [Validators.required, Validators.email, this.emailUniqueness]
+        {
+          validators: [Validators.required, Validators.email],
+          asyncValidators: [emailValidator],
+          updateOn: "blur"
+        }
       ],
       role: [this.roles]
     });
@@ -43,10 +51,6 @@ export class SignUpComponent implements OnInit {
   }
 
   ngOnInit() {}
-
-  emailUniqueness(control: FormControl): Observable<any> {
-    return this.ask.verifyEmail(control.value);
-  }
 
   onSubmit() {
     // TODO: Use EventEmitter with form value
