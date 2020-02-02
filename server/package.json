@@ -1,11 +1,12 @@
 {
-  "name": "exp-server",
+  "name": "server",
   "version": "0.0.0",
   "private": true,
   "scripts": {
     "start": "node ./bin/www"
   },
   "dependencies": {
+    "@hapi/joi": "^15.0.3",
     "bcrypt": "^3.0.7",
     "debug": "~2.6.9",
     "dotenv": "^8.2.0",
