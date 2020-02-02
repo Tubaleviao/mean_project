@@ -27,16 +27,6 @@ const auth = async (req, res, next) => {
     }
 }
 
-//signup validation
-const signupValidation = (data) => {
-    const schema = joi.object({
-        username: joi.string().min(3).required(),
-        email: joi.string().min(4).required().email(),
-        password: joi.string().min(5).required(),
-    });
 
-  // lets validate data
-  return schema.validate(data);
-}
 
-module.exports = {database, auth, signupValidation}
+module.exports = {database, auth}

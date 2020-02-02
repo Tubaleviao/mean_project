@@ -1,7 +1,7 @@
 var express = require('express');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt')
-const { auth, signupValidation } = require('../middlewares')
+const { auth } = require('../middlewares')
 var router = express.Router();
 
 /* GET: users listing. */
@@ -80,5 +80,17 @@ router.get('/jwt', (req,res) => {
 router.get('/protected', auth, (req,res) => {
   res.json(req.userinfo)
 })
+
+//signup validation
+const signupValidation = (data) => {
+  const schema = joi.object({
+      username: joi.string().min(3).required(),
+      email: joi.string().min(4).required().email(),
+      password: joi.string().min(5).required(),
+  });
+
+// lets validate data
+return schema.validate(data);
+}
 
 module.exports = router;
