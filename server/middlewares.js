@@ -8,7 +8,7 @@ let db
 const database = async (req, res, next) => {
     if(!db){
         const worked = await client.connect()
-        db = client.db('homework')
+        db = client.db('project')
     }
     req.db = db
     next()
@@ -17,6 +17,7 @@ const database = async (req, res, next) => {
 const auth = async (req, res, next) => {
     try{
         let json = verify(req.headers.token, process.env.JWT_KEY)
+        req.userinfo = json
         next()
     }catch(err){
         next({msg: "token not valid", error: err})
