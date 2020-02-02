@@ -15,3 +15,114 @@ Content-Type: application/json
 GET  http://localhost:3000/users/yadir HTTP/1.1
 Accept: application/json
 
+###
+
+POST https://www.googleapis.com/geolocation/v1/geolocate?key=AIzaSyCzbD-j9HiJdGnjc-EUU-lVMvpEp99e6j4
+Accept: application/json
+
+{
+    "wifiAccessPoints": [
+        {
+            "macAddress": "54:3D:37:05:44:08",
+            "channel": 6,
+            "signalStrength": -50,
+        },
+        {
+            "macAddress": "54:3D:37:45:44:08",
+            "channel": 6,
+            "signalStrength": -50,
+        },
+        {
+            "macAddress": "6E:51:84:27:8C:54",
+            "channel": 11,
+            "signalStrength": -50,
+        },
+        {
+            "macAddress": "54:EC:2F:53:78:38",
+            "channel": 11,
+            "signalStrength": -50,
+        },
+        {
+            "macAddress": "54:EC:2F:13:78:38",
+            "channel": 11,
+            "signalStrength": -50,
+        },
+        {
+            "macAddress": "76:70:FD:38:2F:E8",
+            "channel": 11,
+            "signalStrength": -50.5,
+        },
+        {
+            "macAddress": "54:EC:2F:13:72:18",
+            "channel": 1,
+            "signalStrength": -54,
+        },
+        {
+            "macAddress": "6C:B0:CE:9E:CA:D6",
+            "channel": 1,
+            "signalStrength": -68,
+        },
+        {
+            "macAddress": "54:EC:2F:53:78:3C",
+            "channel": 149,
+            "signalStrength": -69,
+        },
+        {
+            "macAddress": "6E:F6:CF:6B:7B:5D",
+            "channel": 10,
+            "signalStrength": -70.5,
+        },
+        {
+            "macAddress": "54:EC:2F:13:78:3C",
+            "channel": 149,
+            "signalStrength": -72,
+        },
+        {
+            "macAddress": "FA:BB:2C:82:A9:96",
+            "channel": 1,
+            "signalStrength": -72.5,
+        },
+        {
+            "macAddress": "B6:B6:76:5A:79:77",
+            "channel": 11,
+            "signalStrength": -72.5,
+        },
+        {
+            "macAddress": "90:3A:72:20:EF:28",
+            "channel": 6,
+            "signalStrength": -76.5,
+        },
+        {
+            "macAddress": "00:30:0A:CD:2D:8F",
+            "channel": 6,
+            "signalStrength": -82.5,
+        },
+        {
+            "macAddress": "82:C9:4E:6A:23:81",
+            "channel": 11,
+            "signalStrength": -82.5,
+        },
+        {
+            "macAddress": "54:EC:2F:53:72:1C",
+            "channel": 161,
+            "signalStrength": -82.5,
+        },
+        {
+            "macAddress": "54:EC:2F:13:72:1C",
+            "channel": 161,
+            "signalStrength": -83,
+        }
+]
+}
+
+###
+
+{
+  "location": {
+    "lat": 41.0170087,
+    "lng": -91.9677377
+  },
+  "accuracy": 20
+}
+
+https://www.google.com/maps/@41.0170087,-91.9677377,18z
