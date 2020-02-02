@@ -21,6 +21,6 @@ export class AskService {
   }
 
   verifyEmail(email: string): Observable<any> {
-    return this.http.get(`${this.apiURL}/users/unique?email=${email}`);
+    return this.http.get(`${this.apiURL}/unique?email=${email}`);
   }
 }

@@ -44,16 +44,8 @@ export class SignUpComponent implements OnInit {
 
   ngOnInit() {}
 
-  emailUniqueness(control: FormControl): Promise<any> {
-    return new Promise((resolve, reject) => {
-      const subscriber = this.ask.verifyEmail(control.value).subscribe(
-        data => {
-          resolve();
-        },
-        reject,
-        () => subscriber.unsubscribe()
-      );
-    });
+  emailUniqueness(control: FormControl): Observable<any> {
+    return this.ask.verifyEmail(control.value);
   }
 
   onSubmit() {
