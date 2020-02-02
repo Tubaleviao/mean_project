@@ -1,5 +1,7 @@
 import { Component, OnInit } from "@angular/core";
-import { FormGroup, FormBuilder, Validators } from "@angular/forms";
+import { FormGroup, FormBuilder, Validators, FormControl } from "@angular/forms";
+import { AskService } from 'src/app/services/ask.service';
+
 
 @Component({
   selector: "app-sign-up",
@@ -11,11 +13,11 @@ export class SignUpComponent implements OnInit {
 
   signUpForm: FormGroup;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private ask:AskService) {
     this.signUpForm = this.fb.group({
       username: ["", [Validators.required, Validators.minLength(4)]],
       password: ["", [Validators.required, Validators.minLength(8)]],
-      email: ["", [Validators.required, Validators.email]],
+      email: ["", [Validators.required, Validators.email, ask.emailUniqueness]],
       role: [this.roles]
     });
   }
@@ -37,5 +39,7 @@ export class SignUpComponent implements OnInit {
   onSubmit() {
     // TODO: Use EventEmitter with form value
     console.warn(this.signUpForm.value);
+    this.ask.signup(Object.assign({}, this.signUpForm.value))
+    .subscribe(console.log)
   }
 }

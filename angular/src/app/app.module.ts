@@ -2,7 +2,9 @@ import { BrowserModule } from "@angular/platform-browser";
 import { AngularMaterialModule } from "./angular-material.module";
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { HttpClientModule } from '@angular/common/http';
 
+import { AskService} from './services/ask.service'
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
 import { SignInComponent } from "./components/sign-in/sign-in.component";
@@ -20,9 +22,10 @@ import { FlexLayoutModule } from "@angular/flex-layout";
     AngularMaterialModule,
     FlexLayoutModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    HttpClientModule
   ],
-  providers: [],
+  providers: [AskService],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
