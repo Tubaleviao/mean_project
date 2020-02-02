@@ -3,6 +3,7 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt')
 const { auth } = require('../middlewares')
 var router = express.Router();
+const joi = require('@hapi/joi');
 
 /* GET: users listing. */
 router.get('/', function(req, res, next) {
@@ -35,7 +36,7 @@ router.post('/signup', async function(req, res, next){
   const hashed_password = await bcrypt.hash(req.body.password, salt);
 
   const new_user = {
-    username: req.body.name,
+    username: req.body.username,
     email: req.body.email,
     password: hashed_password
   };
@@ -51,9 +52,9 @@ router.post('/signup', async function(req, res, next){
 
 /* POST: signin users */
 router.post('/signin', async function(req, res, next){
-  
-  const{ error } = signinValidation(req.body)
-  if(error) return res.json({message: error.details[0].message});
+
+  const { error } = signinValidation(req.body);
+  if (error) return res.json({nessage:error.details[0].message});
 
   const user = await req.db.collection('users').findOne({ username: req.body.username });
   if(!user) return res.json({message: "Username Not Found!"});
@@ -105,7 +106,7 @@ const signupValidation = (data) => {
 // SIGNIN Validation
 const signinValidation = (data) => {
   const schema = joi.object({
-      username: joi.string().min(3).required().email(),
+      username: joi.string().min(3).required(),
       password: joi.string().min(5).required(),
   });
   // validate data
