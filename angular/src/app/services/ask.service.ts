@@ -1,29 +1,26 @@
-import { Injectable } from '@angular/core';
+import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
-import { HttpClient } from '@angular/common/http';
+import { HttpClient } from "@angular/common/http";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root"
 })
 export class AskService {
+  private apiURL = "http://localhost:3000";
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
-  signin(json):Observable<any>{
-    console.log(json)
-    return this.http.post('http://localhost:3000/users/signin', json)
+  signin(json): Observable<any> {
+    console.log(json);
+    return this.http.post(`${this.apiURL}/users/signin`, json);
   }
 
-  signup(json):Observable<any>{
-    console.log("asdfasdf: "+json)
-    return this.http.post('http://localhost:3000/users/signup', json)
+  signup(json): Observable<any> {
+    console.log("asdfasdf: " + json);
+    return this.http.post(`${this.apiURL}/users/signup`, json);
   }
 
-  emailUniqueness(email: string){
-    ( http: HttpClient): Promise<any> | Observable<any> => {
-      // { 'invalid': true } for not ok
-      // null for ok
-      return http.get('http://localhost:3000/unique?email='+email);
-    }
+  verifyEmail(email: string): Observable<any> {
+    return this.http.get(`${this.apiURL}/users/unique?email=${email}`);
   }
 }
