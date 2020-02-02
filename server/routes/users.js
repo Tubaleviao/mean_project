@@ -8,7 +8,6 @@ const joi = require('@hapi/joi');
 
 /* GET: users listing. */
 router.get('/', function(req, res, next) {
-  //res.json({msg:"something"})
   req.db.collection('users').find({},  { '_id': 0, 'username': 1, 'email': 1 } )
         .toArray((err, documents) => {
             res.status(200).json(documents);
@@ -30,7 +29,6 @@ router.post('/signup', async function(req, res, next){
   // checking validation
   // const { error } = signupValidation(req.body);
   // if (error) return res.status(400).json({message: error.details[0].message});
-
 
   const email_exist = await req.db.collection('users').findOne({ email: req.body.email });
   if (email_exist) return res.status(400).json({message :"This email is already taken!"});
@@ -68,6 +66,13 @@ router.post('/signin', async function(req, res, next){
   const token = jwt.sign({id: user._id}, process.env.JWT_KEY);
   res.header('auth-token', token).json({token: token, user_id: user._id});
 
+});
+
+/* GET: check unique email */
+router.get('/unique', async function(req, res, next){
+  const email_exist = await req.db.collection('users').findOne({ email: req.body.email });
+  if (email_exist) return res.status(400).json({message :"This email is already taken!"});
+  res.json({Success: "This email is unique, it doen't exit!"})
 });
 
 /* PUT: update users */
