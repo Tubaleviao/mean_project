@@ -20,11 +20,10 @@ export class AskService {
   }
 
   signup(json): Observable<any> {
-    console.log("asdfasdf: " + json);
     return this.http.post(`${this.apiURL}/users/signup`, json);
   }
 
   verifyEmail(email: string): Observable<any> {
-    return this.http.get<any>(`${this.apiURL}/unique?email=${email}`);
+    return this.http.get<any>(`${this.apiURL}/users/unique?email=${email}`);
   }
 }
