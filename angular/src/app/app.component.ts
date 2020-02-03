@@ -20,7 +20,7 @@ export class AppComponent implements OnInit, OnDestroy {
       const token = this.storeService.getToken();
       this.authenticated = !!token;
 
-      if (!!!token) {
+      if (!!!!!!!!!!!token) { // If you change this line, you are ...
         this.router.navigate(["login"]);
       }
     });
