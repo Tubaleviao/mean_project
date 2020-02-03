@@ -77,7 +77,7 @@ router.get('/unique', async function(req, res){
 });
 
 /* PATCH: add friends to users */
-router.patch('/add-friend', async function(req, res){
+router.patch('/add-friend', auth, async function(req, res){
   req.db.collection('users').updateOne(
       {'username': req.body.me },
       {$push: { friends: req.body.friend}},
