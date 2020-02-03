@@ -7,7 +7,7 @@ const joi = require('@hapi/joi');
 
 
 /* GET: users listing. */
-router.get('/', function(req, res, next) {
+router.get('/', function(req, res) {
   //res.json({msg:"something"})
   req.db.collection('users').find({},  { '_id': 0, 'username': 1, 'email': 1 } )
         .toArray((err, documents) => {
@@ -25,7 +25,7 @@ router.get("/:username", (req, res) => {
 });
 
 /* POST: signup users */
-router.post('/signup', async function(req, res, next){
+router.post('/signup', async function(req, res){
   
   // checking validation
   // const { error } = signupValidation(req.body);
@@ -54,7 +54,7 @@ router.post('/signup', async function(req, res, next){
 });
 
 /* POST: signin users */
-router.post('/signin', async function(req, res, next){
+router.post('/signin', async function(req, res){
 
   const { error } = signinValidation(req.body);
   if (error) return res.json({nessage:error.details[0].message});
@@ -70,12 +70,20 @@ router.post('/signin', async function(req, res, next){
 
 });
 
+router.get('/unique', async function(req, res){
+  req.db.collection('users').findOne({ email: req.query.email }, (err, doc) =>{
+    if (err) res.json({msg: "Unique routes error: "+err});
+    else if (!!doc) res.json({success: true});
+    else res.json({success: false});
+  })
+});
+
 /* PUT: update users */
-router.put('/update/:id/', function(req, res, next){
+router.put('/update/:id/', function(req, res){
   
 })
 
-router.delete('/remove/:username', function(req, res, next){
+router.delete('/remove/:username', function(req, res){
   const query = { course: req.params.username };
   collection.deleteOne(query);
   res.send(`User successfully deleted`);
