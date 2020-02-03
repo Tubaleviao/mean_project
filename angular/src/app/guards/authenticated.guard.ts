@@ -7,13 +7,13 @@ import {
   Router
 } from "@angular/router";
 import { Observable } from "rxjs";
-import { store } from "../store";
+import { StoreService } from "../services/store.service";
 
 @Injectable({
   providedIn: "root"
 })
 export class AuthenticatedGuard implements CanActivate {
-  constructor(private router: Router) {}
+  constructor(private router: Router, private storeService: StoreService) {}
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
@@ -22,7 +22,7 @@ export class AuthenticatedGuard implements CanActivate {
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree {
-    const token = store.getState().jwt;
+    const token = this.storeService.getToken();
     if (!token || token.split(".").length !== 3) {
       return this.router.parseUrl("/login");
     }

@@ -1,5 +1,6 @@
 import { Component, OnInit, OnDestroy } from "@angular/core";
-import { store } from "./store/index";
+import { StoreService } from "./services/store.service";
+import { Router } from "@angular/router";
 
 @Component({
   selector: "app-root",
@@ -10,14 +11,17 @@ export class AppComponent implements OnInit, OnDestroy {
   title = "MEAN Pro";
   storeUnsubscribe;
   authenticated: boolean = false;
-  constructor() {
-    this.authenticated = !!store.getState().jwt;
+  constructor(private storeService: StoreService, private router: Router) {
+    this.authenticated = !!this.storeService.getToken();
   }
 
   ngOnInit(): void {
-    console.log("STATE", store.getState());
-    this.storeUnsubscribe = store.subscribe(() => {
-      this.authenticated = !!store.getState().jwt;
+    this.storeUnsubscribe = this.storeService.getStore().subscribe(() => {
+      const token = this.storeService.getToken();
+      this.authenticated = !!token;
+      if (!!!token) {
+        this.router.navigate([""]);
+      }
     });
   }
 

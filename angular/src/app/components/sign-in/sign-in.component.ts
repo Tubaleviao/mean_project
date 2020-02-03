@@ -2,7 +2,8 @@ import { Component, OnInit } from "@angular/core";
 import { FormGroup, Validators, FormBuilder } from "@angular/forms";
 import { AskService } from "src/app/services/ask.service";
 import { Router } from "@angular/router";
-import {MatSnackBar} from '@angular/material/snack-bar';
+import { MatSnackBar } from "@angular/material/snack-bar";
+import { StoreService } from "src/app/services/store.service";
 
 @Component({
   selector: "app-sign-in",
@@ -15,6 +16,7 @@ export class SignInComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private ask: AskService,
+    private storeService: StoreService,
     private router: Router,
     private snackBar: MatSnackBar
   ) {
@@ -35,14 +37,14 @@ export class SignInComponent implements OnInit {
   ngOnInit() {}
 
   onSubmit() {
-    this.ask.signin(this.signInForm.value).subscribe((r) => {
-      if(r.body.ok){
-        this.ask.saveToken(r.body.token)
+    this.ask.signin(this.signInForm.value).subscribe(r => {
+      if (r.body.ok) {
+        this.storeService.saveToken(r.body.token);
         this.router.navigate(["dashboard"]);
-      }else{
+      } else {
         this.snackBar.open(r.body.message, "Close", {
-          duration: 2000,
-        })
+          duration: 2000
+        });
       }
     });
   }
