@@ -8,7 +8,7 @@ import {
 
 import { Observable } from "rxjs";
 import { map } from "rxjs/operators";
-import { store } from "../store/store";
+import { store } from "../store/index";
 
 @Injectable()
 export class MainInterceptor implements HttpInterceptor {

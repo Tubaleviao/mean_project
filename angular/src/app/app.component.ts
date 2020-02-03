@@ -1,6 +1,5 @@
 import { Component, OnInit, OnDestroy } from "@angular/core";
-import { store } from "./store/store";
-import { Subscription } from "rxjs";
+import { store } from "./store/index";
 
 @Component({
   selector: "app-root",
@@ -11,8 +10,12 @@ export class AppComponent implements OnInit, OnDestroy {
   title = "MEAN Pro";
   storeUnsubscribe;
   authenticated: boolean = false;
+  constructor() {
+    this.authenticated = !!store.getState().jwt;
+  }
 
   ngOnInit(): void {
+    console.log("STATE", store.getState());
     this.storeUnsubscribe = store.subscribe(() => {
       this.authenticated = !!store.getState().jwt;
     });
