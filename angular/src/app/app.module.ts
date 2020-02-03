@@ -15,6 +15,7 @@ import { FlexLayoutModule } from "@angular/flex-layout";
 import { DashboardModule } from "./modules/dashboard/dashboard.module";
 import { MainInterceptor } from "./interceptors/main-interceptor";
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import {SocketService} from './services/socket.service'
 
 @NgModule({
   declarations: [AppComponent, SignInComponent, SignUpComponent],
@@ -36,7 +37,8 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
       provide: HTTP_INTERCEPTORS,
       useClass: MainInterceptor,
       multi: true
-    }
+    },
+    SocketService
   ],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
