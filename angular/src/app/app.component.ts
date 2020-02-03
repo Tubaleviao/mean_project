@@ -19,8 +19,9 @@ export class AppComponent implements OnInit, OnDestroy {
     this.storeUnsubscribe = this.storeService.getStore().subscribe(() => {
       const token = this.storeService.getToken();
       this.authenticated = !!token;
+
       if (!!!token) {
-        this.router.navigate([""]);
+        this.router.navigate(["login"]);
       }
     });
   }
