@@ -2,11 +2,12 @@ import { IAppState } from "./state";
 import { SAVE_JWT, SAVE_USER } from "./actions";
 const initialState: IAppState = {
   user: { username: "", email: "", friends: [] },
-  jwt: ""
+  jwt: localStorage.getItem("token") || ""
 };
 // let nextId=4
 
 function saveJWT(state, action): IAppState {
+  localStorage.setItem("token", action.payload);
   return Object.assign({}, state, {
     jwt: action.payload
   });

@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { HttpClient } from "@angular/common/http";
-import { store } from "../store/store";
+import { store } from "../store/index";
 import { map } from "rxjs/operators/";
 import { saveJWT } from "../store/actions";
 
