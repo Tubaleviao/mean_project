@@ -6,8 +6,8 @@ var router = express.Router();
 const joi = require('@hapi/joi');
 
 /* GET: users listing. */
-router.get('/', function(req, res) {
-  //res.json({msg:"something"})
+
+router.get('/', function(req, res, next) {
   req.db.collection('users').find({},  { '_id': 0, 'username': 1, 'email': 1 } )
         .toArray((err, documents) => {
             res.status(200).json(documents);
@@ -77,7 +77,7 @@ router.get('/unique', async function(req, res){
 });
 
 /* PATCH: add friends to users */
-router.patch('/add-friend', async function(req, res){
+router.patch('/add-friend', auth, async function(req, res){
   req.db.collection('users').updateOne(
       {'username': req.body.me },
       {$push: { friends: req.body.friend}},
