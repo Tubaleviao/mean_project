@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpResponse } from "@angular/common/http";
 import { store } from "../store/index";
 import { map } from "rxjs/operators/";
 import { saveJWT } from "../store/actions";
@@ -14,9 +14,14 @@ export class AskService {
   constructor(private http: HttpClient) {}
 
   signin(json): Observable<any> {
+    //console.log("asdfsdfasadfasfdsasdfsadfsdasadfsaddf")
     return this.http
-      .post<{ token: string }>(`${this.apiURL}/users/signin`, json)
-      .pipe(map(({ token }) => store.dispatch(saveJWT(token))));
+      .post(`${this.apiURL}/users/signin`, json, {observe: "response"})
+      //.pipe(map(({ token }) => store.dispatch(saveJWT(token))));
+  }
+
+  saveToken(token){
+    store.dispatch(saveJWT(token))
   }
 
   signup(json): Observable<any> {
