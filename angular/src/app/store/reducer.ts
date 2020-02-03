@@ -7,7 +7,9 @@ const initialState: IAppState = {
 // let nextId=4
 
 function saveJWT(state, action): IAppState {
-  localStorage.setItem("token", action.payload);
+  if(!!action.payload){
+    localStorage.setItem("token", action.payload);
+  }
   return Object.assign({}, state, {
     jwt: action.payload
   });

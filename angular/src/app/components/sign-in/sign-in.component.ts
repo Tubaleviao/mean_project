@@ -35,25 +35,15 @@ export class SignInComponent implements OnInit {
   ngOnInit() {}
 
   onSubmit() {
-    //console.log("submit")
-    // TODO: Use EventEmitter with form value
-    //console.warn(this.signInForm.value);
-    //console.log(this.signInForm);
-
     this.ask.signin(this.signInForm.value).subscribe((r) => {
-      console.log("afdasdfasdfsadfsadf");
-      console.log(r);
-      if(r.status == 200){
+      if(r.body.ok){
         this.ask.saveToken(r.body.token)
+        this.router.navigate(["dashboard"]);
       }else{
-        console.log("sdfsadf")
-        this.snackBar.open("testing", "Close", {
+        this.snackBar.open(r.body.message, "Close", {
           duration: 2000,
         })
       }
-      //this.ask.saveToken(r.token)
-      // TODO: Add to redux state
-      //this.router.navigate(["dashboard"]);
     });
   }
 }
