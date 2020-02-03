@@ -45,16 +45,6 @@ export class DashboardComponent implements AfterViewInit, OnInit {
       this.lat = lat;
       this.lng = lng;
     });
-    // let script = this._r2.createElement("script");
-    // script.type = `text/javascript`;
-    // script.async = true;
-    // script.defer = true;
-    // script.addEventListener("load", () => {
-    //   const coordinates = new google.maps.LatLng(this.lat, this.lng);
-    //   console.log("COORDS", coordinates.toJSON());
-    //   // alert("JJJJ");
-    // });
-    // this._r2.appendChild(this._document.body, script);
   }
 
   ngAfterViewInit() {
