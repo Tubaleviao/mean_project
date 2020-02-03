@@ -5,7 +5,6 @@ const { auth } = require('../middlewares')
 var router = express.Router();
 const joi = require('@hapi/joi');
 
-
 /* GET: users listing. */
 router.get('/', function(req, res) {
   //res.json({msg:"something"})
@@ -31,7 +30,6 @@ router.post('/signup', async function(req, res){
   // const { error } = signupValidation(req.body);
   // if (error) return res.status(400).json({message: error.details[0].message});
 
-
   const email_exist = await req.db.collection('users').findOne({ email: req.body.email });
   if (email_exist) return res.status(400).json({message :"This email is already taken!"});
 
@@ -48,7 +46,7 @@ router.post('/signup', async function(req, res){
     const saved_user = await req.db.collection('users').insertOne(new_user);
     res.json({ success: "The new user is added!", user: saved_user._id });
   } catch (err) {
-      res.status({message:err.message}); // res.status({message:'Error Occured'});
+      res.status({message:err.message}); 
   }
 
 });
@@ -75,13 +73,22 @@ router.get('/unique', async function(req, res){
     if (err) res.json({msg: "Unique routes error: "+err});
     else if (!!doc) res.json({success: true});
     else res.json({success: false});
-  })
+  });
 });
 
-/* PUT: update users */
-router.put('/update/:id/', function(req, res){
-  
-})
+/* PATCH: add friends to users */
+router.patch('/add-friend', async function(req, res){
+  req.db.collection('users').updateOne(
+      {'username': req.body.me },
+      {$push: { friends: req.body.friend}},
+      (err, data) => {
+        if(err){
+          res.json({ success: false, 'message': 'Friend not added! Error: ' + err });
+        }else{ 
+          res.json({ success: true, 'message': `Your friend, ${req.body.friend} is added to your friends list!`});
+        }
+      });
+});
 
 router.delete('/remove/:username', function(req, res){
   const query = { course: req.params.username };
