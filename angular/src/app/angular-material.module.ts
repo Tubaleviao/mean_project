@@ -2,6 +2,7 @@ import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
 
 import {
+  MatAutocompleteModule,
   MatButtonModule,
   MatToolbarModule,
   MatIconModule,
@@ -24,6 +25,7 @@ import {
 @NgModule({
   imports: [
     CommonModule,
+    MatAutocompleteModule,
     MatButtonModule,
     MatToolbarModule,
     MatIconModule,
@@ -43,6 +45,7 @@ import {
     MatPaginatorModule
   ],
   exports: [
+    MatAutocompleteModule,
     MatButtonModule,
     MatToolbarModule,
     MatIconModule,
