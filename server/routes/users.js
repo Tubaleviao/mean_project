@@ -57,16 +57,16 @@ router.post('/signup', async function(req, res){
 router.post('/signin', async function(req, res){
 
   const { error } = signinValidation(req.body);
-  if (error) return res.status(400).json({message:error.details[0].message});
+  if (error) res.json({ok: false, message:error.details[0].message});
 
   const user = await req.db.collection('users').findOne({ username: req.body.username });
-  if(!user) return res.status(400).json({message: "Username Not Found!"});
-
+  if(!user) res.json({ok: false, message: "Username Not Found!"});
+  
   const valid_password = await bcrypt.compare(req.body.password, user.password);
-  if(!valid_password) return res.status(400).json({message: 'Invalid Password!'});
+  if(!valid_password) res.json({ok: false, message: 'Invalid Password!'});
 
   const token = jwt.sign({id: user._id}, process.env.JWT_KEY);
-  res.header('auth-token', token).json({token: token, user_id: user._id, api_token: process.env.GOOGLE_KEY});
+  res.header('auth-token', token).json({ok: true, token: token, user_id: user._id, api_token: process.env.GOOGLE_KEY});
   
 });
 
