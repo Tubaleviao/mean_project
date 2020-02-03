@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { FormGroup, Validators, FormBuilder } from "@angular/forms";
 import { AskService } from "src/app/services/ask.service";
 import { Router } from "@angular/router";
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 @Component({
   selector: "app-sign-in",
@@ -14,7 +15,8 @@ export class SignInComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private ask: AskService,
-    private router: Router
+    private router: Router,
+    private snackBar: MatSnackBar
   ) {
     this.signInForm = this.fb.group({
       username: ["", Validators.required],
@@ -34,13 +36,21 @@ export class SignInComponent implements OnInit {
 
   onSubmit() {
     // TODO: Use EventEmitter with form value
-    console.warn(this.signInForm.value);
-    console.log(this.signInForm);
+    //console.warn(this.signInForm.value);
+    //console.log(this.signInForm);
 
-    this.ask.signin(this.signInForm.value).subscribe(r => {
-      console.log(r);
+    this.ask.signin(this.signInForm.value).subscribe((r) => {
+      console.dir(r);
+      if(r.status == 200){
+        this.ask.saveToken(r.body.token)
+      }else{
+        this.snackBar.open(r.body.message, "Close", {
+          duration: 2000,
+        })
+      }
+      //this.ask.saveToken(r.token)
       // TODO: Add to redux state
-      this.router.navigate(["dashboard"]);
+      //this.router.navigate(["dashboard"]);
     });
   }
 }

@@ -14,6 +14,7 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { FlexLayoutModule } from "@angular/flex-layout";
 import { DashboardModule } from "./modules/dashboard/dashboard.module";
 import { MainInterceptor } from "./interceptors/main-interceptor";
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @NgModule({
   declarations: [AppComponent, SignInComponent, SignUpComponent],
@@ -26,7 +27,8 @@ import { MainInterceptor } from "./interceptors/main-interceptor";
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    DashboardModule
+    DashboardModule,
+    MatSnackBarModule
   ],
   providers: [
     AskService,
