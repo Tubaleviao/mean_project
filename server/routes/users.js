@@ -7,7 +7,7 @@ const joi = require('@hapi/joi');
 
 
 /* GET: users listing. */
-router.get('/', function(req, res, next) {
+router.get('/', function(req, res) {
   //res.json({msg:"something"})
   req.db.collection('users').find({},  { '_id': 0, 'username': 1, 'email': 1 } )
         .toArray((err, documents) => {
@@ -25,7 +25,7 @@ router.get("/:username", (req, res) => {
 });
 
 /* POST: signup users */
-router.post('/signup', async function(req, res, next){
+router.post('/signup', async function(req, res){
   
   // checking validation
   // const { error } = signupValidation(req.body);
@@ -54,28 +54,36 @@ router.post('/signup', async function(req, res, next){
 });
 
 /* POST: signin users */
-router.post('/signin', async function(req, res, next){
+router.post('/signin', async function(req, res){
 
   const { error } = signinValidation(req.body);
-  if (error) return res.json({nessage:error.details[0].message});
+  if (error) res.json({ok: false, message:error.details[0].message});
 
   const user = await req.db.collection('users').findOne({ username: req.body.username });
-  if(!user) return res.json({message: "Username Not Found!"});
-
+  if(!user) res.json({ok: false, message: "Username Not Found!"});
+  
   const valid_password = await bcrypt.compare(req.body.password, user.password);
-  if(!valid_password) return res.json({message: 'Invalid Password!'});
+  if(!valid_password) res.json({ok: false, message: 'Invalid Password!'});
 
   const token = jwt.sign({id: user._id}, process.env.JWT_KEY);
-  res.header('auth-token', token).json({token: token, user_id: user._id});
+  res.header('auth-token', token).json({ok: true, token: token, user_id: user._id, api_token: process.env.GOOGLE_KEY});
+  
+});
 
+router.get('/unique', async function(req, res){
+  req.db.collection('users').findOne({ email: req.query.email }, (err, doc) =>{
+    if (err) res.json({msg: "Unique routes error: "+err});
+    else if (!!doc) res.json({success: true});
+    else res.json({success: false});
+  })
 });
 
 /* PUT: update users */
-router.put('/update/:id/', function(req, res, next){
+router.put('/update/:id/', function(req, res){
   
 })
 
-router.delete('/remove/:username', function(req, res, next){
+router.delete('/remove/:username', function(req, res){
   const query = { course: req.params.username };
   collection.deleteOne(query);
   res.send(`User successfully deleted`);
