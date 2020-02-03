@@ -6,8 +6,8 @@ var router = express.Router();
 const joi = require('@hapi/joi');
 
 /* GET: users listing. */
-router.get('/', function(req, res) {
-  //res.json({msg:"something"})
+
+router.get('/', function(req, res, next) {
   req.db.collection('users').find({},  { '_id': 0, 'username': 1, 'email': 1 } )
         .toArray((err, documents) => {
             res.status(200).json(documents);
