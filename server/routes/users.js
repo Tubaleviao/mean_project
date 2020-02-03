@@ -5,7 +5,6 @@ const { auth } = require('../middlewares')
 var router = express.Router();
 const joi = require('@hapi/joi');
 
-
 /* GET: users listing. */
 router.get('/', function(req, res) {
   //res.json({msg:"something"})
@@ -47,7 +46,7 @@ router.post('/signup', async function(req, res){
     const saved_user = await req.db.collection('users').insertOne(new_user);
     res.json({ success: "The new user is added!", user: saved_user._id });
   } catch (err) {
-      res.status({message:err.message}); // res.status({message:'Error Occured'});
+      res.status({message:err.message}); 
   }
 
 });
@@ -77,10 +76,19 @@ router.get('/unique', async function(req, res){
   });
 });
 
-/* PUT: update users */
-router.put('/update/:id/', function(req, res){
-  
-})
+/* PATCH: add friends to users */
+router.patch('/add-friend', async function(req, res){
+  req.db.collection('users').updateOne(
+      {'username': req.body.me },
+      {$push: { friends: req.body.friend}},
+      (err, data) => {
+        if(err){
+          res.json({ success: false, 'message': 'Friend not added! Error: ' + err });
+        }else{ 
+          res.json({ success: true, 'message': `Your friend, ${req.body.friend} is added to your friends list!`});
+        }
+      });
+});
 
 router.delete('/remove/:username', function(req, res){
   const query = { course: req.params.username };
