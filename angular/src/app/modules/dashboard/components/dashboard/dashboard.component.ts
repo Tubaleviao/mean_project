@@ -3,11 +3,8 @@ import {
   AfterViewInit,
   ViewChild,
   ElementRef,
-  Renderer2,
-  Inject,
   OnInit
 } from "@angular/core";
-import { DOCUMENT } from "@angular/common";
 import { StoreService } from "src/app/services/store.service";
 import { LocationService } from "../../services/location";
 @Component({
@@ -35,16 +32,19 @@ export class DashboardComponent implements AfterViewInit, OnInit {
 
   constructor(
     private locationService: LocationService,
-    private storeService: StoreService,
-    private _r2: Renderer2,
-    @Inject(DOCUMENT) private _document: Document
+    private storeService: StoreService
   ) {}
 
   ngOnInit() {
-    this.locationService.getCurrent().then(({ lat, lng }) => {
-      this.lat = lat;
-      this.lng = lng;
-    });
+    const subscriptor = this.locationService.trackLocation().subscribe(
+      ({ lat, lng }) => {
+        console.log("HEY");
+        this.lat = lat;
+        this.lng = lng;
+      },
+      console.error,
+      () => subscriptor.unsubscribe()
+    );
   }
 
   ngAfterViewInit() {
