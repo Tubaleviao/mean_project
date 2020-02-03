@@ -1,19 +1,18 @@
 import { Injectable } from "@angular/core";
 import {
-  Router,
   CanActivate,
   ActivatedRouteSnapshot,
   RouterStateSnapshot,
-  UrlTree
+  UrlTree,
+  Router
 } from "@angular/router";
 import { Observable } from "rxjs";
-import { StoreService } from "../services/store.service";
 
 @Injectable({
   providedIn: "root"
 })
-export class NotAuthenticatedGuard implements CanActivate {
-  constructor(private router: Router, private storeService: StoreService) {}
+export class AllowedLocationGuard implements CanActivate {
+  constructor(private router: Router) {}
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
@@ -22,9 +21,6 @@ export class NotAuthenticatedGuard implements CanActivate {
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree {
-    if (!!!this.storeService.getToken()) {
-      return true;
-    }
-    return this.router.parseUrl("/dashboard");
+    return true;
   }
 }

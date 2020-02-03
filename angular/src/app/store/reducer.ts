@@ -2,12 +2,12 @@ import { IAppState } from "./state";
 import { SAVE_JWT, SAVE_USER, LOGOUT } from "./actions";
 const initialState: IAppState = {
   user: { username: "", email: "", friends: [] },
-  jwt: localStorage.getItem("token") || ""
+  jwt: localStorage.getItem("token") || "" //
 };
 // let nextId=4
 
 function saveJWT(state, action): IAppState {
-  if(!!action.payload){
+  if (!!action.payload) {
     localStorage.setItem("token", action.payload);
   }
   return Object.assign({}, state, {
@@ -16,8 +16,8 @@ function saveJWT(state, action): IAppState {
 }
 
 function logout(): IAppState {
-  localStorage.setItem("token", '');
-  return Object.assign({}, initialState);
+  localStorage.setItem("token", "");
+  return { ...initialState, jwt: "" };
 }
 
 function saveUser(state, action): IAppState {

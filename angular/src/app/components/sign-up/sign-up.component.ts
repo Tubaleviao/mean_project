@@ -1,10 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import {
-  FormGroup,
-  FormBuilder,
-  Validators,
-  FormControl
-} from "@angular/forms";
+import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { AskService } from "src/app/services/ask.service";
 import { AsyncUniqueEmailValidator } from "src/app/validators/async-unique-email";
 

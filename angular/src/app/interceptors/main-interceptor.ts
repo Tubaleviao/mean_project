@@ -8,15 +8,16 @@ import {
 
 import { Observable } from "rxjs";
 import { map } from "rxjs/operators";
-import { store } from "../store/index";
+import { StoreService } from "../services/store.service";
 
 @Injectable()
 export class MainInterceptor implements HttpInterceptor {
+  constructor(private storeService: StoreService) {}
   intercept(
     req: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
-    const token = store.getState().jwt;
+    const token = this.storeService.getToken();
     const request = req.clone(
       !!token
         ? {
