@@ -70,6 +70,14 @@ router.post('/signin', async function(req, res, next){
 
 });
 
+router.get('/unique', async function(req, res, next){
+  req.db.collection('users').findOne({ email: req.query.email }, (err, doc) =>{
+    if (err) res.json({msg: "Unique routes error: "+err});
+    else if (!!doc) res.json({success: true});
+    else res.json({success: false});
+  })
+});
+
 /* PUT: update users */
 router.put('/update/:id/', function(req, res, next){
   
