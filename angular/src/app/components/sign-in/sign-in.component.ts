@@ -35,16 +35,19 @@ export class SignInComponent implements OnInit {
   ngOnInit() {}
 
   onSubmit() {
+    //console.log("submit")
     // TODO: Use EventEmitter with form value
     //console.warn(this.signInForm.value);
     //console.log(this.signInForm);
 
     this.ask.signin(this.signInForm.value).subscribe((r) => {
-      console.dir(r);
+      console.log("afdasdfasdfsadfsadf");
+      console.log(r);
       if(r.status == 200){
         this.ask.saveToken(r.body.token)
       }else{
-        this.snackBar.open(r.body.message, "Close", {
+        console.log("sdfsadf")
+        this.snackBar.open("testing", "Close", {
           duration: 2000,
         })
       }

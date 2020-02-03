@@ -14,7 +14,6 @@ export class AskService {
   constructor(private http: HttpClient) {}
 
   signin(json): Observable<any> {
-    //console.log("asdfsdfasadfasfdsasdfsadfsdasadfsaddf")
     return this.http
       .post(`${this.apiURL}/users/signin`, json, {observe: "response"})
       //.pipe(map(({ token }) => store.dispatch(saveJWT(token))));

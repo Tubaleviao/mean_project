@@ -17,6 +17,7 @@ app.use(database)
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.all('/', (req,res) => req.statusCode(404).send("not found"))
 
 app.use(function(err, req, res, next) {
   if(err) res.json({msg: "error", error: err});
