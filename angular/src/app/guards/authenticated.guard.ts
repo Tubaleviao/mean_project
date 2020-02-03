@@ -22,7 +22,8 @@ export class AuthenticatedGuard implements CanActivate {
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree {
-    if (!store.getState().jwt) {
+    const token = store.getState().jwt;
+    if (!token || token.split(".").length !== 3) {
       return this.router.parseUrl("/login");
     }
     return true;
