@@ -9,18 +9,19 @@ import { saveJWT } from "../store/actions";
   providedIn: "root"
 })
 export class AskService {
-  private apiURL = "http://localhost:3000";
+  private apiURL = "http://tuba.work:3000";
 
   constructor(private http: HttpClient) {}
 
   signin(json): Observable<any> {
-    return this.http
-      .post(`${this.apiURL}/users/signin`, json, {observe: "response"})
-      //.pipe(map(({ token }) => store.dispatch(saveJWT(token))));
+    return this.http.post(`${this.apiURL}/users/signin`, json, {
+      observe: "response"
+    });
+    //.pipe(map(({ token }) => store.dispatch(saveJWT(token))));
   }
 
-  saveToken(token){
-    store.dispatch(saveJWT(token))
+  saveToken(token) {
+    store.dispatch(saveJWT(token));
   }
 
   signup(json): Observable<any> {
