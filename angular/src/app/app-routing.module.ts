@@ -6,12 +6,9 @@ import { SignUpComponent } from "./components/sign-up/sign-up.component";
 import { NotAuthenticatedGuard } from "src/app/guards/notauthenticated.guard";
 
 const routes: Routes = [
-  { path: "", pathMatch: "full", redirectTo: "login" },
+  { path: "", pathMatch: "full", redirectTo: "dashboard" },
   { path: "login", component: SignInComponent, canActivate: [NotAuthenticatedGuard] },
-  { 
-    path: "register", 
-    component: SignUpComponent, 
-    canActivate: [NotAuthenticatedGuard]}
+  { path: "register", component: SignUpComponent, canActivate: [NotAuthenticatedGuard] }
 ];
 
 @NgModule({
