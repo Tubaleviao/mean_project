@@ -15,6 +15,7 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    console.log("STATE", store.getState());
     this.storeUnsubscribe = store.subscribe(() => {
       this.authenticated = !!store.getState().jwt;
     });
