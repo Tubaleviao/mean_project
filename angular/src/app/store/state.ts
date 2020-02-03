@@ -1,4 +1,4 @@
-import { IUser } from "./topic";
+import { IUser } from "./user";
 export interface IAppState {
   user: IUser;
   jwt: string;
