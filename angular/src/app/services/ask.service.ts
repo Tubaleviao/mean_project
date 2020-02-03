@@ -3,7 +3,7 @@ import { Observable } from "rxjs";
 import { HttpClient, HttpResponse } from "@angular/common/http";
 import { store } from "../store/index";
 import { map } from "rxjs/operators/";
-import { saveJWT } from "../store/actions";
+import { saveJWT, logout } from "../store/actions";
 
 @Injectable({
   providedIn: "root"
@@ -18,6 +18,10 @@ export class AskService {
       observe: "response"
     });
     //.pipe(map(({ token }) => store.dispatch(saveJWT(token))));
+  }
+
+  logout(){
+    store.dispatch(logout())
   }
 
   saveToken(token) {

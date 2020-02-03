@@ -9,6 +9,7 @@ import {
 } from "@angular/core";
 import { DOCUMENT } from "@angular/common";
 import { AskService } from "src/app/services/ask.service";
+import { Router } from '@angular/router'
 
 @Component({
   selector: "app-dashboard",
@@ -25,6 +26,7 @@ export class DashboardComponent implements OnInit {
   constructor(
     private ask: AskService,
     private _r2: Renderer2,
+    private router: Router,
     @Inject(DOCUMENT) private _document: Document
   ) {}
 
@@ -41,5 +43,10 @@ export class DashboardComponent implements OnInit {
     });
 
     this._r2.appendChild(this._document.body, script);
+  }
+
+  logout(){
+    this.ask.logout()
+    this.router.navigate(["/login"])
   }
 }
