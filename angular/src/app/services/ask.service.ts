@@ -9,7 +9,7 @@ import { saveJWT } from "../store/actions";
   providedIn: "root"
 })
 export class AskService {
-  private apiURL = "http://tuba.work:3000";
+  private apiURL = "http://localhost:3000";
 
   constructor(private http: HttpClient) {}
 
@@ -24,6 +24,10 @@ export class AskService {
   }
 
   verifyEmail(email: string): Observable<any> {
-    return this.http.get<any>(`${this.apiURL}/users/unique?email=${email}`);
+    return this.http.get(`${this.apiURL}/users/unique?email=${email}`);
+  }
+
+  getMapScriptPath(): string {
+    return `${this.apiURL}/maps`;
   }
 }
