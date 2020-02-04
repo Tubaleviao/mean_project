@@ -38,7 +38,6 @@ export class DashboardComponent implements AfterViewInit, OnInit {
   ngOnInit() {
     const subscriptor = this.locationService.trackLocation().subscribe(
       ({ lat, lng }) => {
-        console.log("HEY")
         this.lat = lat;
         this.lng = lng;
       },
