@@ -45,4 +45,7 @@ header,
   background-color: #fff;
   border-bottom-right-radius: 5px;
   border-bottom-left-radius: 5px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  max-height: 300px;
 }

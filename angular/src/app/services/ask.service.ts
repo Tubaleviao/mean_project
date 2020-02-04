@@ -24,4 +24,8 @@ export class AskService {
   verifyEmail(email: string): Observable<any> {
     return this.http.get(`${this.apiURL}/users/unique?email=${email}`);
   }
+
+  searchUsers(criteria: string): Observable<any> {
+    return this.http.get(`${this.apiURL}/users/search?_q=${criteria}`);
+  }
 }

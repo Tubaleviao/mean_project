@@ -13,8 +13,9 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { FlexLayoutModule } from "@angular/flex-layout";
 import { DashboardModule } from "./modules/dashboard/dashboard.module";
 import { MainInterceptor } from "./interceptors/main-interceptor";
-import { MatSnackBarModule } from '@angular/material/snack-bar';
-import {SocketService} from './services/socket.service'
+import { MatSnackBarModule } from "@angular/material/snack-bar";
+import { SocketService } from "./services/socket.service";
+import { PipesModule } from "./pipes/pipes.module";
 
 @NgModule({
   declarations: [ AppComponent, SignInComponent, SignUpComponent],
@@ -28,7 +29,8 @@ import {SocketService} from './services/socket.service'
     ReactiveFormsModule,
     HttpClientModule,
     DashboardModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    PipesModule
   ],
   providers: [
     {
