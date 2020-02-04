@@ -46,8 +46,8 @@ router.post('/signin', async (req, res) => {
   const valid_password = await bcrypt.compare(req.body.password, user.password);
   if (!valid_password) res.json({ ok: false, message: 'Invalid Password!' });
 
-  const token = jwt.sign({ id: user._id }, process.env.JWT_KEY);
-  res.header('auth-token', token).json({ ok: true, token: token, user_id: user._id });
+  const token = jwt.sign({ ...user }, process.env.JWT_KEY);
+  res.header('auth-token', token).json({ ok: true, token: token, data: user });
 });
 
 router.get('/unique', async (req, res) => {

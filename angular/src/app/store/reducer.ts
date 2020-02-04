@@ -1,7 +1,7 @@
 import { IAppState } from "./state";
 import { SAVE_JWT, SAVE_USER, LOGOUT } from "./actions";
 const initialState: IAppState = {
-  user: { username: "", email: "", friends: [] },
+  user: { username: "", email: "", friends: [], location: {lat:0, long:0} },
   jwt: localStorage.getItem("token") || "" //
 };
 // let nextId=4
