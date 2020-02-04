@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { AskService } from "src/app/services/ask.service";
 import { Observable } from "rxjs";
 import { distinctUntilChanged, map } from "rxjs/operators";
-import { SocketService } from 'src/app/services/socket.service'
+import { SocketService } from "src/app/services/socket.service";
 
 interface Coordinate {
   lat: number;
@@ -16,8 +16,8 @@ export class LocationService {
     return new Promise((resolve, reject) => {
       navigator.geolocation.getCurrentPosition(
         resp => {
-          const obj = { lng: resp.coords.longitude, lat: resp.coords.latitude }
-          this.socket.sendMessage(obj)
+          const obj = { lng: resp.coords.longitude, lat: resp.coords.latitude };
+          this.socket.sendMessage(obj);
           resolve(obj);
         },
         err => {
@@ -50,12 +50,11 @@ export class LocationService {
     }).pipe(
       distinctUntilChanged(
         (prev: Coordinate, curr: Coordinate) =>
-          prev.lat === curr.lat && 
-          prev.lng === curr.lng
+          prev.lat === curr.lat && prev.lng === curr.lng
       ),
       map(obj => {
-        this.socket.sendMessage(obj)
-        return obj
+        this.socket.sendMessage(obj);
+        return obj;
       })
     );
   }
