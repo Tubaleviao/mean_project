@@ -58,7 +58,6 @@ export class LocationService {
           prev.lat === curr.lat && prev.lng === curr.lng
       ),
       map(obj => {
-        console.log(this.store.getState())
         const holeObj = { username: this.store.getState().user.username, location: obj}
         this.socket.sendMessage(holeObj)
         return obj;
