@@ -55,14 +55,23 @@ router.get('/unique', async (req, res) => {
   res.json({ success: exists ? true : false })
 });
 
+router.patch('/change-username', auth, async (req, res) => {
+  const changed = await controller.changeUsername(req.body.username, req.body.newUsername);
+  res.json({ success: changed ? true : false})
+});
+
 router.patch('/add-friend', auth, async (req, res) => {
   const added = await controller.addFriend(req.body.me, req.body.friend)
   res.json({ success: added ? true : false})
 });
 
+router.patch('/update-email', async (req, res) => {
+  
+});
+
 router.delete('/remove/:username', async (req, res) => {
   res.json({success: await controller.del(req.params.username) ? true : false});
-})
+});
 
 const signupValidation = data => {
   const schema = joi.object({
