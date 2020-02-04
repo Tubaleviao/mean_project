@@ -30,7 +30,7 @@ export class SearchBarComponent implements OnInit, AfterViewInit {
 
   @Output("onSearch") onSearch = new EventEmitter<string>();
 
-  list: string[] = []; // ["a", "b", "c"];
+  list: any[] = [];
 
   private subscription: Subscription;
 
@@ -67,11 +67,21 @@ export class SearchBarComponent implements OnInit, AfterViewInit {
       .subscribe(criteria => {
         if (!!criteria) {
           this.isPending = true;
-          console.log("SEARCH", criteria, this.searchKey);
-          this.onSearch.emit(criteria);
-          this.ask.searchUsers(criteria).subscribe(users => {
-            console.log("USERS", users);
-          });
+          this.list = [];
+
+          const subs = this.ask.searchUsers(criteria).subscribe(
+            users => {
+              console.log("USERS", users);
+              this.list = users;
+            },
+            err => console.log(err),
+            () => {
+              this.isPending = false;
+              subs.unsubscribe();
+            }
+          );
+        } else {
+          this.list = [];
         }
       });
   }
