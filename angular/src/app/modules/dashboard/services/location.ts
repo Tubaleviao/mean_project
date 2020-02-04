@@ -21,6 +21,7 @@ export class LocationService {
       navigator.geolocation.getCurrentPosition(
         resp => {
           const obj = { lng: resp.coords.longitude, lat: resp.coords.latitude };
+          console.log(this.store.getState())
           const holeObj = { username: this.store.getState().user.username, location: obj}
           this.socket.sendMessage(holeObj);
           resolve(obj);
