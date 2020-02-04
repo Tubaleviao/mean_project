@@ -19,9 +19,8 @@ const addFriend = async (username, friend) => {
     return await db.updateOne({ username }, { $push: { friends: friend } });
 }
 
-const saveLocation = async socket => {
-    return await db.find({})
-        .project({ "_id": 0, "username": 1 }).toArray();
+const saveLocation = async (username, location) => {
+    return await db.findAndModify({username}, {$set:{location}})
 }
 
 module.exports = {

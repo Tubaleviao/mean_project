@@ -6,7 +6,7 @@ const code = socket => {
         console.log(message);
         // { lng: -91.9590777, lat: 41.013430500000005 }
         socket.emit('new-message', message)
-        // TODO: save location at the database
+        saveLocation(...message)
     });
 }
 

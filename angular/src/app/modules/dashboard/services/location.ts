@@ -1,5 +1,6 @@
 import { Injectable } from "@angular/core";
 import { AskService } from "src/app/services/ask.service";
+import { StoreService } from "src/app/services/store.service";
 import { Observable } from "rxjs";
 import { distinctUntilChanged, map } from "rxjs/operators";
 import { SocketService } from "src/app/services/socket.service";
@@ -11,13 +12,17 @@ interface Coordinate {
 
 @Injectable()
 export class LocationService {
-  constructor(private ask: AskService, private socket: SocketService) {}
+  constructor(
+    private ask: AskService,
+    private socket: SocketService,
+    private store: StoreService) { }
   async getCurrent(): Promise<Coordinate> {
     return new Promise((resolve, reject) => {
       navigator.geolocation.getCurrentPosition(
         resp => {
           const obj = { lng: resp.coords.longitude, lat: resp.coords.latitude };
-          this.socket.sendMessage(obj);
+          const holeObj = { username: this.store.getState().user.username, location: obj}
+          this.socket.sendMessage(holeObj);
           resolve(obj);
         },
         err => {
