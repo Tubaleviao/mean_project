@@ -20,7 +20,8 @@
                 <mat-icon>search</mat-icon>
             </button>
             <mat-spinner mode="indeterminate" *ngIf="isPending" diameter="30"></mat-spinner>
-            <input class="search-control" type="text" placeholder="Search" [value]="searchKey" #searchbar autofocus>
+            <input class="search-control" type="text" placeholder="Search" [value]="searchKey" #searchbar autofocus
+                (blur)="stopSeach()">
             <button mat-button mat-icon-button (click)="stopSeach()">
                 <mat-icon>close</mat-icon>
             </button>

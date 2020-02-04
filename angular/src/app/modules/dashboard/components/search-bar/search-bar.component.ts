@@ -51,6 +51,7 @@ export class SearchBarComponent implements OnInit, AfterViewInit {
   stopSeach() {
     this.isSearching = false;
     this.searchKey = "";
+    this.list = [];
   }
 
   ngAfterViewInit(): void {
