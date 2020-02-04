@@ -8,7 +8,7 @@ import {Observable} from 'rxjs'
 export class SocketService {
   private socket
   constructor() {
-    this.socket = io("http://tuba.work:3000") // also change at ask service
+    this.socket = io("https://chocotuba.work") // also change at ask service
    }
 
   public sendMessage(message) {

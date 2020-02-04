@@ -10,6 +10,7 @@ import { AsyncUniqueEmailValidator } from "src/app/validators/async-unique-email
 })
 export class SignUpComponent implements OnInit {
   roles: any[] = ["Victim", "Stalker", "Witness"];
+  selected;
 
   signUpForm: FormGroup;
 
