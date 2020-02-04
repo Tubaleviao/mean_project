@@ -39,7 +39,9 @@ export class SignInComponent implements OnInit {
   onSubmit() {
     this.ask.signin(this.signInForm.value).subscribe(r => {
       if (r.body.ok) {
+        console.log(r.body)
         this.storeService.saveToken(r.body.token);
+        this.storeService.saveUser(r.body.data);
         this.router.navigate(["dashboard"]);
       } else {
         this.snackBar.open(r.body.message, "Close", {

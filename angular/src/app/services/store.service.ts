@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { store } from "../store/index";
-import { saveJWT, logout } from "../store/actions";
+import { saveJWT, logout, saveUser } from "../store/actions";
 
 @Injectable({
   providedIn: "root"
@@ -12,6 +12,10 @@ export class StoreService {
 
   getStore() {
     return store;
+  }
+
+  saveUser(user){
+    store.dispatch(saveUser(user));
   }
 
   saveToken(token) {
