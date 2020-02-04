@@ -1,0 +1,23 @@
+<div class="search-bar">
+    <!-- Pre-Search Bar -->
+    <mat-toolbar-row *ngIf="!isSearching" id="search-bar">
+        <span flex></span>
+
+        <!-- Search button (initiates search) -->
+        <button mat-icon-button (click)="initiateSearch()">
+            <mat-icon>search</mat-icon>
+            <span>Search</span>
+        </button>
+    </mat-toolbar-row>
+
+    <!-- Search bar -->
+    <mat-toolbar-row *ngIf="isSearching" id="search-bar">
+        <mat-icon class="example-icon" aria-hidden="false" (click)="stopSeach()">search</mat-icon>
+        <span class="example-spacer"></span>
+        <!-- Input Text -->
+        <mat-form-field class="example-form-field">
+            <input matInput type="text" placeholder="Search friend" [value]="value" flex>
+        </mat-form-field>
+        <mat-icon class="example-icon" aria-hidden="false" (click)="stopSeach()">close</mat-icon>
+    </mat-toolbar-row>
+</div>

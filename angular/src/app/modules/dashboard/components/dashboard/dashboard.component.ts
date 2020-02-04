@@ -22,7 +22,7 @@ export class DashboardComponent implements AfterViewInit, OnInit {
 
   mapOptions: google.maps.MapOptions = {
     center: this.coordinates,
-    zoom: 8
+    zoom: 15
   };
 
   marker = new google.maps.Marker({
@@ -38,7 +38,6 @@ export class DashboardComponent implements AfterViewInit, OnInit {
   ngOnInit() {
     const subscriptor = this.locationService.trackLocation().subscribe(
       ({ lat, lng }) => {
-        console.log("HEY");
         this.lat = lat;
         this.lng = lng;
       },

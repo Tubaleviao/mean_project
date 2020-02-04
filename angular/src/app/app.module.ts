@@ -32,7 +32,6 @@ import {SocketService} from './services/socket.service'
     MatSnackBarModule
   ],
   providers: [
-    AskService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: MainInterceptor,
