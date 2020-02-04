@@ -17,9 +17,7 @@ const initialState: IAppState = {
 
 function saveJWT(state, action): IAppState {
   if (!!action.payload) localStorage.setItem("token", action.payload);
-  return Object.assign({}, state, {
-    jwt: action.payload
-  });
+  return { ...state, jwt: action.payload };
 }
 
 function logout(): IAppState {
