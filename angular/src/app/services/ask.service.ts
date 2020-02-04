@@ -35,4 +35,12 @@ export class AskService {
       friend
     );
   }
+
+  removeFriend(friendId): Observable<any> {
+    return this.http.delete(
+      `${this.apiURL}/users/${
+        this.storeService.getUser()._id
+      }/friends/${friendId}`
+    );
+  }
 }
