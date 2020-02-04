@@ -1,16 +1,17 @@
 import { IAppState } from "./state";
 import { SAVE_JWT, SAVE_USER, LOGOUT } from "./actions";
-const storedUser = localStorage.getItem("user");
+const user = !!localStorage.getItem("user")
+  ? JSON.parse(localStorage.getItem("user"))
+  : {
+      _id: "",
+      username: "",
+      email: "",
+      friends: [],
+      location: { lat: 0, long: 0 }
+    };
+
 const initialState: IAppState = {
-  user: !!storedUser
-    ? JSON.parse(storedUser)
-    : {
-        _id: "",
-        username: "",
-        email: "",
-        friends: [],
-        location: { lat: 0, long: 0 }
-      },
+  user,
   jwt: localStorage.getItem("token") || ""
 };
 
