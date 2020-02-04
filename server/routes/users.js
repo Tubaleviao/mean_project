@@ -60,6 +60,11 @@ router.patch('/change-username', auth, async (req, res) => {
   res.json({ success: changed ? true : false})
 });
 
+router.patch('/change-email', auth, async (req, res) => {
+  const changed = await controller.changeEmail(req.body.username, req.body.newEmail)
+  res.json({success: changed ? true : false})
+})
+
 router.patch('/add-friend', auth, async (req, res) => {
   const added = await controller.addFriend(req.body.me, req.body.friend)
   res.json({ success: added ? true : false})
