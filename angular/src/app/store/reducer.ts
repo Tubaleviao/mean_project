@@ -1,8 +1,16 @@
 import { IAppState } from "./state";
 import { SAVE_JWT, SAVE_USER, LOGOUT } from "./actions";
-
+const storedUser = localStorage.getItem("user");
 const initialState: IAppState = {
-  user: JSON.parse(localStorage.getItem("user")) || { _id: "", username: "", email: "", friends: [], location: {lat:0, long:0} },
+  user: !!storedUser
+    ? JSON.parse(storedUser)
+    : {
+        _id: "",
+        username: "",
+        email: "",
+        friends: [],
+        location: { lat: 0, long: 0 }
+      },
   jwt: localStorage.getItem("token") || ""
 };
 
@@ -20,11 +28,9 @@ function logout(): IAppState {
 }
 
 function saveUser(state, action): IAppState {
-  const newState = Object.assign({}, state, {
-    user: action.payload
-  });
-  if (!!action.payload) localStorage.setItem("user", JSON.stringify(newState.user));
-  return newState
+  if (!!action.payload)
+    localStorage.setItem("user", JSON.stringify(action.payload));
+  return { ...state, user: action.payload };
 }
 
 export function reducer(state: IAppState = initialState, action) {

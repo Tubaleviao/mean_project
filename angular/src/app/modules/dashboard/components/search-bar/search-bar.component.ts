@@ -15,6 +15,7 @@ import {
   debounceTime,
   distinctUntilChanged
 } from "rxjs/operators";
+import { AskService } from "src/app/services/ask.service";
 
 @Component({
   selector: "app-search-bar",
@@ -29,13 +30,13 @@ export class SearchBarComponent implements OnInit, AfterViewInit {
 
   @Output("onSearch") onSearch = new EventEmitter<string>();
 
-  list: string[] = []; // ["a", "b", "c"];
+  list: any[] = [];
 
   private subscription: Subscription;
 
   @ViewChild("searchbar", { static: true }) searchElement: ElementRef;
 
-  constructor() {}
+  constructor(private ask: AskService) {}
 
   ngOnInit() {}
 
@@ -50,6 +51,7 @@ export class SearchBarComponent implements OnInit, AfterViewInit {
   stopSeach() {
     this.isSearching = false;
     this.searchKey = "";
+    this.list = [];
   }
 
   ngAfterViewInit(): void {
@@ -63,11 +65,25 @@ export class SearchBarComponent implements OnInit, AfterViewInit {
         debounceTime(400),
         distinctUntilChanged()
       )
-      .subscribe(criterion => {
-        if (!!criterion) {
+      .subscribe(criteria => {
+        if (!!criteria) {
           this.isPending = true;
-          console.log("SEARCH", criterion, this.searchKey);
-          this.onSearch.emit(criterion);
+          this.list = [];
+
+          const subs = this.ask.searchUsers(criteria).subscribe(
+            users => {
+              console.log("USERS", users);
+              this.list = users;
+            },
+            err => console.log(err),
+            () => {
+              this.isPending = false;
+              subs.unsubscribe();
+            }
+          );
+        } else {
+          this.list = [];
+          this.isPending = false;
         }
       });
   }
