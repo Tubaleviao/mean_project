@@ -1,12 +1,11 @@
-import { IAppState } from "./state";
-import { SAVE_JWT, SAVE_USER, LOGOUT } from "./actions";
+import { IAppState } from "../types/app.state";
+import { SAVE_JWT, SAVE_USER, LOGOUT } from "../actions/app";
 const user = !!localStorage.getItem("user")
   ? JSON.parse(localStorage.getItem("user"))
   : {
       _id: "",
       username: "",
       email: "",
-      friends: [],
       location: { lat: 0, long: 0 }
     };
 
@@ -32,7 +31,7 @@ function saveUser(state, action): IAppState {
   return { ...state, user: action.payload };
 }
 
-export function reducer(state: IAppState = initialState, action) {
+export default function reducer(state: IAppState = initialState, action) {
   switch (action.type) {
     case SAVE_USER:
       return saveUser(state, action);

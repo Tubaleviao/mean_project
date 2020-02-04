@@ -76,12 +76,12 @@ router.patch("/change-email", auth, async (req, res) => {
 });
 
 router.post("/:id/friends/", auth, async (req, res) => {
-  const added = await controller.addFriend(req.body.me, req.body.friend);
+  const added = await controller.addFriend(req.me, req.body.username);
   res.json({ success: added ? true : false });
 });
 
 // To verify if the user has the friend already or not
-router.get("/:id/friends/:friendId", auth, async (req, res) => {
+router.get("/:id/friends/:friend", auth, async (req, res) => {
   // const added = await controller.addFriend(req.body.me, req.body.friend);
   // res.json({ success: added ? true : false });
 });

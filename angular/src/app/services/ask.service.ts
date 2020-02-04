@@ -2,6 +2,7 @@ import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { HttpClient } from "@angular/common/http";
 import { StoreService } from "./store.service";
+import { map } from "rxjs/operators";
 
 @Injectable({
   providedIn: "root"
@@ -29,11 +30,29 @@ export class AskService {
     return this.http.get(`${this.apiURL}/users/search?_q=${criteria}`);
   }
 
-  addFriend(friend): Observable<any> {
-    return this.http.post(
-      `${this.apiURL}/users/${this.storeService.getUser()._id}/friends`,
-      friend
-    );
+  addFriend(friend): Observable<boolean> {
+    return this.http
+      .post(
+        `${this.apiURL}/users/${this.storeService.getUser()._id}/friends`,
+        friend
+      )
+      .pipe(
+        map(({ success }: { success: boolean }) => {
+          if (success) this.storeService.addFriend(friend);
+          return success;
+        })
+      );
+  }
+
+  loadFriends() {
+    return this.http
+      .get(`${this.apiURL}/users/${this.storeService.getUser()._id}/friends`)
+      .pipe(
+        map((friends: string[]) => {
+          this.storeService.setFriends(friends);
+          return friends;
+        })
+      );
   }
 
   removeFriend(friendId): Observable<any> {

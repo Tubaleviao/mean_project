@@ -42,8 +42,11 @@ const changeEmail = async (username, newEmail) => {
   return await db.updateOne({ username }, { $set: { email: newEmail } });
 };
 
-const addFriend = async (username, friend) => {
-  return await db.updateOne({ username }, { $addToSet: { friends: friend } });
+const addFriend = async (currentUser, friend) => {
+  return await db.updateOne(
+    { _id: mongodb.ObjectId(currentUser._id) },
+    { $addToSet: { friends: friend } }
+  );
 };
 
 module.exports = {
