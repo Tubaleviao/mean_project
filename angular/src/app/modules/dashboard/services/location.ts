@@ -43,7 +43,7 @@ export class LocationService {
           observer.error(error);
           observer.complete();
         });
-      }, 10000);
+      }, 30000);
     }).pipe(
       distinctUntilChanged(
         (prev: Coordinate, curr: Coordinate) =>
