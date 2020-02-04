@@ -13,14 +13,9 @@ router.get("/", auth, async (req, res) => {
   res.json(users.map(obj => obj.username));
 });
 
-router.get("/search", auth, async (req, res) => {
-  const { _q } = req.query;
-  if (_q) {
-    return res.json(await controller.findMatchingUsers(_q));
-  }
-
-  res.json([]);
-});
+router.get("/search", auth, async (req, res) =>
+  res.json(req.query._q ? await controller.findMatchingUsers(req.query._q) : [])
+);
 
 router.get("/:username", async (req, res) => {
   res.json({ ...(await controller.findUser(req.params.username)) });
@@ -78,7 +73,7 @@ router.patch("/change-email", auth, async (req, res) => {
   res.json({ success: changed ? true : false });
 });
 
-router.patch("/add-friend", auth, async (req, res) => {
+router.post("/:id/friends/", auth, async (req, res) => {
   const added = await controller.addFriend(req.body.me, req.body.friend);
   res.json({ success: added ? true : false });
 });

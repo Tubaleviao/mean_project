@@ -38,7 +38,7 @@ const changeEmail = async (username, newEmail) => {
 };
 
 const addFriend = async (username, friend) => {
-  return await db.updateOne({ username }, { $push: { friends: friend } });
+  return await db.updateOne({ username }, { $addToSet: { friends: friend } });
 };
 
 module.exports = {
