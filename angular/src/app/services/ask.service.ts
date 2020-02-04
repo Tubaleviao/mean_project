@@ -7,7 +7,7 @@ import { StoreService } from "./store.service";
   providedIn: "root"
 })
 export class AskService {
-  private apiURL = "http://tuba.work:3000"; // also change at socket service
+  private apiURL = "https://chocotuba.work"; // also change at socket service
 
   constructor(private http: HttpClient, private storeService: StoreService) {}
 
@@ -23,5 +23,9 @@ export class AskService {
 
   verifyEmail(email: string): Observable<any> {
     return this.http.get(`${this.apiURL}/users/unique?email=${email}`);
+  }
+
+  searchUsers(criteria: string): Observable<any> {
+    return this.http.get(`${this.apiURL}/users/search?_q=${criteria}`);
   }
 }

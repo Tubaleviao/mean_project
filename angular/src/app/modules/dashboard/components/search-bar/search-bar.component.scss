@@ -1,7 +1,57 @@
 .search-bar {
   display: flex;
-  //   width: 300px;
+  position: relative;
+  margin-right: 10px;
   flex: 1;
   padding: 2px;
-  //   background-color: red;
+  border: 1px solid #ececec;
+  border-radius: 30px;
+
+  flex-direction: column;
+}
+
+header {
+  display: flex;
+  flex-direction: row;
+  flex: 1;
+  position: sticky;
+  top: 0;
+  // z-index: 11;
+  transition: all 250ms ease-in-out;
+  flex: 1;
+}
+.main-header {
+  @extend header;
+  &.hidden {
+    opacity: 0;
+    display: none;
+  }
+}
+.search-block {
+  width: 0%;
+  display: none;
+  @extend header;
+  &.active {
+    display: flex;
+    width: 100%;
+  }
+  .search-control {
+    flex: 1;
+    font-size: 1rem;
+    border: 0;
+    outline: none;
+  }
+}
+
+.search-list {
+  position: absolute;
+  top: 45px;
+  left: 10px;
+  width: 95%;
+  background-color: #fff;
+  border-bottom-right-radius: 5px;
+  border-bottom-left-radius: 5px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  max-height: 300px;
 }

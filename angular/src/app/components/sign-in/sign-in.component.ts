@@ -40,6 +40,7 @@ export class SignInComponent implements OnInit {
     this.ask.signin(this.signInForm.value).subscribe(r => {
       if (r.body.ok) {
         this.storeService.saveToken(r.body.token);
+        this.storeService.saveUser(r.body.data);
         this.router.navigate(["dashboard"]);
       } else {
         this.snackBar.open(r.body.message, "Close", {

@@ -10,6 +10,12 @@ interface Coordinate {
   lng: number;
 }
 
+const options = {
+  enableHighAccuracy: true,
+  timeout: 5000,
+  maximumAge: 0
+};
+
 @Injectable()
 export class LocationService {
   constructor(
@@ -21,13 +27,15 @@ export class LocationService {
       navigator.geolocation.getCurrentPosition(
         resp => {
           const obj = { lng: resp.coords.longitude, lat: resp.coords.latitude };
+          console.log(this.store.getState())
           const holeObj = { username: this.store.getState().user.username, location: obj}
           this.socket.sendMessage(holeObj);
           resolve(obj);
         },
         err => {
           reject(err);
-        }
+        },
+        options
       );
     });
   }
@@ -43,14 +51,14 @@ export class LocationService {
       navigator.geolocation.getCurrentPosition(successHander, error => {
         observer.error(error);
         observer.complete();
-      });
+      }, options);
 
       const intervalID = setInterval(() => {
         navigator.geolocation.getCurrentPosition(successHander, error => {
           clearInterval(intervalID);
           observer.error(error);
           observer.complete();
-        });
+        }, options);
       }, 30000);
     }).pipe(
       distinctUntilChanged(
