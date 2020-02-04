@@ -24,7 +24,8 @@ const addFriend = async (username, friend) => {
 }
 
 const saveLocation = async (username, location) => {
-    db.findOneAndUpdate({username}, {$set:{location:location}})
+    const resp = await db.findOneAndUpdate({username}, {$set:{location:location}})
+    console.log(resp)
 }
 
 module.exports = {
