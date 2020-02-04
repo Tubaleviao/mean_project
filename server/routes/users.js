@@ -16,10 +16,7 @@ router.get("/", auth, async (req, res) => {
 router.get("/search", auth, async (req, res) => {
   const { _q } = req.query;
   if (_q) {
-    console.log("QUERY", req.query);
-    const users = await controller.findMatchingUsers(_q);
-    res.json(users);
-    return;
+    return res.json(await controller.findMatchingUsers(_q));
   }
 
   res.json([]);

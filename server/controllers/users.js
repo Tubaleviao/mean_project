@@ -26,6 +26,7 @@ const findMatchingUsers = criteria =>
       $or: [{ username: { $regex: criteria } }, { email: { $regex: criteria } }]
     })
     .project({ password: 0 })
+    .sort({ username: 1 })
     .toArray();
 
 const changeUsername = async (username, newUsername) => {

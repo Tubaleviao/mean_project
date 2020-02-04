@@ -83,6 +83,7 @@ export class SearchBarComponent implements OnInit, AfterViewInit {
           );
         } else {
           this.list = [];
+          this.isPending = false;
         }
       });
   }
