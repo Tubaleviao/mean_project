@@ -7,7 +7,7 @@ import { StoreService } from "./store.service";
   providedIn: "root"
 })
 export class AskService {
-  private apiURL = "http://locahost:3000"; // also change at socket service
+  private apiURL = "http://localhost:3000"; // also change at socket service
 
   constructor(private http: HttpClient, private storeService: StoreService) {}
 

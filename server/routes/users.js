@@ -15,9 +15,14 @@ router.get("/", auth, async (req, res) => {
 
 router.get("/search", auth, async (req, res) => {
   const { _q } = req.query;
-  console.log("QUERY", req.query);
-  const users = await controller.getUsers();
-  res.json(users.map(obj => obj.username));
+  if (_q) {
+    console.log("QUERY", req.query);
+    const users = await controller.findMatchingUsers(_q);
+    res.json(users);
+    return;
+  }
+
+  res.json([]);
 });
 
 router.get("/:username", async (req, res) => {
