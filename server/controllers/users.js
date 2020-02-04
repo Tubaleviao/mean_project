@@ -19,6 +19,10 @@ const changeUsername = async (username, newUsername) => {
     return await db.updateOne({username}, {$set: {username: newUsername}});
 }
 
+const changeEmail = async (username, newEmail) => {
+    return await db.updateOne({username}, {$set: {email: newEmail}})
+}
+
 const addFriend = async (username, friend) => {
     return await db.updateOne({ username }, { $push: { friends: friend } });
 }
@@ -28,6 +32,7 @@ const saveLocation = async (username, location) => {
 }
 
 module.exports = {
-    getUsers, saveLocation, changeUsername,
-    uniqueEmail, insert, findUser, addFriend, del
+    getUsers, saveLocation, 
+    uniqueEmail, insert, findUser, addFriend, del,
+    changeUsername, changeEmail
 }
