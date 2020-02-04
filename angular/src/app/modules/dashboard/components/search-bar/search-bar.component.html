@@ -1,23 +1,39 @@
 <div class="search-bar">
-    <!-- Pre-Search Bar -->
-    <mat-toolbar-row *ngIf="!isSearching" id="search-bar">
-        <span flex></span>
+    <div class="main-header" [class.hidden]="isSearching">
+        <mat-toolbar-row
+            style="padding: 0 5px; display: flex; flex-direction: row; flex:1; align-items: center; justify-content: space-between;"
+            (click)="initiateSearch()">
+            <div style="padding: 0 0 0 10px;">
+                <div class="mat-subheading-2" style="margin-bottom:2px;">{{placeholder}}</div>
+            </div>
 
-        <!-- Search button (initiates search) -->
-        <button mat-icon-button (click)="initiateSearch()">
-            <mat-icon>search</mat-icon>
-            <span>Search</span>
-        </button>
-    </mat-toolbar-row>
+            <button mat-icon-button (click)="initiateSearch()">
+                <mat-icon>search</mat-icon>
+            </button>
+        </mat-toolbar-row>
+    </div>
 
-    <!-- Search bar -->
-    <mat-toolbar-row *ngIf="isSearching" id="search-bar">
-        <mat-icon class="example-icon" aria-hidden="false" (click)="stopSeach()">search</mat-icon>
-        <span class="example-spacer"></span>
-        <!-- Input Text -->
-        <mat-form-field class="example-form-field">
-            <input matInput type="text" placeholder="Search friend" [value]="value" flex>
-        </mat-form-field>
-        <mat-icon class="example-icon" aria-hidden="false" (click)="stopSeach()">close</mat-icon>
-    </mat-toolbar-row>
+    <div class="search-block" [class.active]="isSearching">
+        <mat-toolbar-row
+            style="padding: 0 5px; display: flex; flex-direction: row; flex:1; align-items: center; justify-content: space-between;">
+            <button class="search-icon" mat-icon-button disabled>
+                <mat-icon>search</mat-icon>
+            </button>
+            <input class="search-control" type="text" placeholder="Search" [value]="value" #searchbar autofocus>
+            <button mat-button mat-icon-button (click)="stopSeach()">
+                <mat-icon>close</mat-icon>
+            </button>
+        </mat-toolbar-row>
+    </div>
+
+    <mat-list class="search-list">
+        <mat-list-item *ngFor="let item of list">
+            <mat-icon mat-list-avatar style="width:auto">person</mat-icon>
+            <div mat-line>{{item}}</div>
+        </mat-list-item>
+        <mat-list-item *ngIf="(list).length === 0">
+            <mat-icon mat-list-avatar>error</mat-icon>
+            <div mat-line>0 results</div>
+        </mat-list-item>
+    </mat-list>
 </div>
