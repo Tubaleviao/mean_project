@@ -28,4 +28,11 @@ export class AskService {
   searchUsers(criteria: string): Observable<any> {
     return this.http.get(`${this.apiURL}/users/search?_q=${criteria}`);
   }
+
+  addFriend(friend): Observable<any> {
+    return this.http.post(
+      `${this.apiURL}/users/${this.storeService.getUser()._id}/friends`,
+      friend
+    );
+  }
 }
