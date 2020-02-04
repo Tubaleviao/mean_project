@@ -15,16 +15,16 @@ function saveJWT(state, action): IAppState {
 
 function logout(): IAppState {
   localStorage.setItem("token", "");
-  localStorage.setItem("user", "");
+  localStorage.setItem("user", "{}");
   return { ...initialState, jwt: "" };
 }
 
 function saveUser(state, action): IAppState {
-  const newUser = Object.assign({}, state, {
+  const newState = Object.assign({}, state, {
     user: action.payload
   });
-  if (!!action.payload) localStorage.setItem("user", JSON.stringify(newUser));
-  return newUser
+  if (!!action.payload) localStorage.setItem("user", JSON.stringify(newState.user));
+  return newState
 }
 
 export function reducer(state: IAppState = initialState, action) {

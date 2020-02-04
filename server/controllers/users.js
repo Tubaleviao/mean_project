@@ -14,7 +14,7 @@ const insert = async new_user => await db.insertOne(new_user)
 const findUser = async username => await db.findOne({ username })
 const del = async username => await db.deleteOne({ username })
 const getUsers = async () => await db.find().project({ _id: 0, username: 1 }).toArray()
-const saveLocation = (username, location) => findOneAndUpdate({username}, {$set:{location}})
+const saveLocation = (username, location) => db.findOneAndUpdate({username}, {$set:{location}})
 
 const changeUsername = async (username, newUsername) => {
     return await db.updateOne({username}, {$set: {username: newUsername}});
