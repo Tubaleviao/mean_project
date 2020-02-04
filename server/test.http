@@ -24,7 +24,7 @@ Accept: application/json
 
 ###
 
-POST https://www.googleapis.com/geolocation/v1/geolocate?key=AIzaSyCzbD-j9HiJdGnjc-EUU-lVMvpEp99e6j4
+POST https://www.googleapis.com/geolocation/v1/geolocate?key=SOMETHING
 Accept: application/json
 
 {
