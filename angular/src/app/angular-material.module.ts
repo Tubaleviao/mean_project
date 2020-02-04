@@ -3,6 +3,7 @@ import { CommonModule } from "@angular/common";
 
 import {
   MatAutocompleteModule,
+  MatMenuModule,
   MatButtonModule,
   MatToolbarModule,
   MatIconModule,
@@ -42,7 +43,8 @@ import {
     MatChipsModule,
     MatTooltipModule,
     MatTableModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatMenuModule
   ],
   exports: [
     MatAutocompleteModule,
@@ -61,7 +63,8 @@ import {
     MatChipsModule,
     MatTooltipModule,
     MatTableModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatMenuModule
   ],
   providers: [MatDatepickerModule]
 })
