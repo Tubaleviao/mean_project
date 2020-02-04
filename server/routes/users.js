@@ -14,7 +14,9 @@ router.get("/", auth, async (req, res) => {
 });
 
 router.get("/search", auth, async (req, res) =>
-  res.json(req.query._q ? await controller.findMatchingUsers(req.query._q) : [])
+  res.json(
+    req.query._q ? await controller.findMatchingUsers(req.me, req.query._q) : []
+  )
 );
 
 router.get("/:username", async (req, res) => {

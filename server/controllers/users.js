@@ -1,4 +1,5 @@
-const MongoClient = require("mongodb").MongoClient;
+const mongodb = require("mongodb");
+const MongoClient = mongodb.MongoClient;
 
 const conf = { useNewUrlParser: true, useUnifiedTopology: true };
 const client = new MongoClient(process.env.DB_HOST, conf);
@@ -20,10 +21,14 @@ const getUsers = async () =>
     .toArray();
 const saveLocation = (username, location) =>
   db.findOneAndUpdate({ username }, { $set: { location } });
-const findMatchingUsers = criteria =>
+const findMatchingUsers = (currentUser, criteria) =>
   db
     .find({
-      $or: [{ username: { $regex: criteria } }, { email: { $regex: criteria } }]
+      $or: [
+        { username: { $regex: criteria } },
+        { email: { $regex: criteria } }
+      ],
+      _id: { $ne: mongodb.ObjectId(currentUser._id) }
     })
     .project({ password: 0 })
     .sort({ username: 1 })

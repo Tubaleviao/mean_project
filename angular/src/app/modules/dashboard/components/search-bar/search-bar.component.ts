@@ -74,7 +74,10 @@ export class SearchBarComponent implements OnInit, AfterViewInit {
             users => {
               this.list = users;
             },
-            err => console.log(err),
+            err => {
+              console.log(err);
+              this.isPending = false;
+            },
             () => {
               this.isPending = false;
               subs.unsubscribe();
