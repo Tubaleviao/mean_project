@@ -19,14 +19,14 @@
             <button class="search-icon" mat-icon-button disabled>
                 <mat-icon>search</mat-icon>
             </button>
-            <input class="search-control" type="text" placeholder="Search" [value]="value" #searchbar autofocus>
+            <input class="search-control" type="text" placeholder="Search" [value]="searchKey" #searchbar autofocus>
             <button mat-button mat-icon-button (click)="stopSeach()">
                 <mat-icon>close</mat-icon>
             </button>
         </mat-toolbar-row>
     </div>
 
-    <mat-list class="search-list">
+    <mat-list class="search-list" *ngIf="isPending">
         <mat-list-item *ngFor="let item of list">
             <mat-icon mat-list-avatar style="width:auto">person</mat-icon>
             <div mat-line>{{item}}</div>

@@ -1,18 +1,39 @@
-import { Component, OnInit, ViewChild, ElementRef } from "@angular/core";
+import {
+  Component,
+  OnInit,
+  ViewChild,
+  ElementRef,
+  AfterViewInit,
+  Output,
+  EventEmitter,
+  Input
+} from "@angular/core";
+import { fromEvent, Subscription } from "rxjs";
+import {
+  map,
+  startWith,
+  debounceTime,
+  distinctUntilChanged
+} from "rxjs/operators";
 
 @Component({
   selector: "app-search-bar",
   templateUrl: "./search-bar.component.html",
   styleUrls: ["./search-bar.component.scss"]
 })
-export class SearchBarComponent implements OnInit {
+export class SearchBarComponent implements OnInit, AfterViewInit {
   placeholder = "SearchBar";
   isSearching: boolean = false;
-  value: string = "";
+  isPending: boolean = false;
+  @Input("initialValue") searchKey: string = "";
 
-  list: string[] = []// ["a", "b", "c"];
+  @Output("onSearch") onSearch = new EventEmitter<string>();
 
-  @ViewChild("searchbar", { static: true }) searchElement;
+  list: string[] = []; // ["a", "b", "c"];
+
+  private subscription: Subscription;
+
+  @ViewChild("searchbar", { static: true }) searchElement: ElementRef;
 
   constructor() {}
 
@@ -28,6 +49,30 @@ export class SearchBarComponent implements OnInit {
 
   stopSeach() {
     this.isSearching = false;
-    this.value = "";
+    this.searchKey = "";
+  }
+
+  ngAfterViewInit(): void {
+    this.subscription = fromEvent<any>(
+      this.searchElement.nativeElement,
+      "keyup"
+    )
+      .pipe(
+        map(event => event.target.value),
+        startWith(this.searchKey),
+        debounceTime(400),
+        distinctUntilChanged()
+      )
+      .subscribe(criterion => {
+        if (!!criterion) {
+          this.isPending = true;
+          console.log("SEARCH", criterion, this.searchKey);
+          this.onSearch.emit(criterion);
+        }
+      });
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 }
