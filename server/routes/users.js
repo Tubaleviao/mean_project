@@ -44,7 +44,7 @@ router.post("/signin", async (req, res) => {
   const { error } = signinValidation(req.body);
   if (error) res.json({ ok: false, message: error.details[0].message });
 
-  const user = await controller.findUser(req.body.username);
+  const { friends, ...user } = await controller.findUser(req.body.username);
   if (!user) res.json({ ok: false, message: "Username Not Found!" });
 
   const valid_password = await bcrypt.compare(req.body.password, user.password);
