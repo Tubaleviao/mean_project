@@ -1,23 +1,23 @@
-import { Injectable } from '@angular/core'
-import * as io from 'socket.io-client'
-import {Observable} from 'rxjs'
+import { Injectable } from "@angular/core";
+import * as io from "socket.io-client";
+import { Observable } from "rxjs";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root"
 })
 export class SocketService {
-  private socket
+  private socket;
   constructor() {
-    this.socket = io("http://tuba.work:3000") // also change at ask service
-   }
+    this.socket = io("https://chocotuba.work"); // also change at ask service
+  }
 
   public sendMessage(message) {
-    this.socket.emit('new-message', message);
+    this.socket.emit("new-message", message);
   }
 
   public getMessages = () => {
-    return Observable.create((observer) =>{
-      this.socket.on('new-message', m => observer.next(m))
-    })
-  }
+    return Observable.create(observer => {
+      this.socket.on("new-message", m => observer.next(m));
+    });
+  };
 }
