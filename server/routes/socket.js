@@ -5,7 +5,7 @@ const code = socket => {
     socket.on('new-message', function (message){
         console.log(message)
         socket.emit('new-message', message)
-        saveLocation( message.user, message.location)
+        saveLocation( message.username, message.location)
     });
 }
 
