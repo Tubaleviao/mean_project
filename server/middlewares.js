@@ -1,7 +1,5 @@
 const MongoClient = require("mongodb").MongoClient;
 const { verify } = require("jsonwebtoken");
-//VALIDATION package
-const joi = require("@hapi/joi");
 
 const client = new MongoClient(process.env.DB_HOST, {
   useNewUrlParser: true,
@@ -9,6 +7,11 @@ const client = new MongoClient(process.env.DB_HOST, {
 });
 
 let db;
+
+const usersCollection = async (req,res,next)=>{
+  req.db = req.db.collection('users')
+  next()
+}
 
 const database = async (req, res, next) => {
   if (!db) {
@@ -19,10 +22,10 @@ const database = async (req, res, next) => {
   next();
 };
 
-const auth = async (req, res, next) => {
+const auth = (req, res, next) => {
   try {
     const [type, token] = req.headers.authorization.split(" ");
-    let json = verify(token, process.env.JWT_KEY); // suggestion.. add await
+    let json = verify(token, process.env.JWT_KEY);
     req.userinfo = json;
     next();
   } catch (err) {
@@ -30,4 +33,4 @@ const auth = async (req, res, next) => {
   }
 };
 
-module.exports = { database, auth };
+module.exports = { database, auth, usersCollection };
