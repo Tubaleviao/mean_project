@@ -15,6 +15,7 @@ import {
   debounceTime,
   distinctUntilChanged
 } from "rxjs/operators";
+import { AskService } from "src/app/services/ask.service";
 
 @Component({
   selector: "app-search-bar",
@@ -35,7 +36,7 @@ export class SearchBarComponent implements OnInit, AfterViewInit {
 
   @ViewChild("searchbar", { static: true }) searchElement: ElementRef;
 
-  constructor() {}
+  constructor(private ask: AskService) {}
 
   ngOnInit() {}
 
@@ -63,11 +64,14 @@ export class SearchBarComponent implements OnInit, AfterViewInit {
         debounceTime(400),
         distinctUntilChanged()
       )
-      .subscribe(criterion => {
-        if (!!criterion) {
+      .subscribe(criteria => {
+        if (!!criteria) {
           this.isPending = true;
-          console.log("SEARCH", criterion, this.searchKey);
-          this.onSearch.emit(criterion);
+          console.log("SEARCH", criteria, this.searchKey);
+          this.onSearch.emit(criteria);
+          this.ask.searchUsers(criteria).subscribe(users => {
+            console.log("USERS", users);
+          });
         }
       });
   }
