@@ -15,20 +15,8 @@ import { LocationService } from "../../services/location";
 export class DashboardComponent implements AfterViewInit, OnInit {
   @ViewChild("mapContainer", { static: false }) gmap: ElementRef;
   map: google.maps.Map;
-  lat = 41.017288;
-  lng = -91.9671737;
-
-  coordinates = new google.maps.LatLng(this.lat, this.lng);
-
-  mapOptions: google.maps.MapOptions = {
-    center: this.coordinates,
-    zoom: 15
-  };
-
-  marker = new google.maps.Marker({
-    position: this.coordinates,
-    map: this.map
-  });
+  lat = -23.5577311;
+  lng = -46.6485777;
 
   constructor(
     private locationService: LocationService,
@@ -38,8 +26,16 @@ export class DashboardComponent implements AfterViewInit, OnInit {
   ngOnInit() {
     const subscriptor = this.locationService.trackLocation().subscribe(
       ({ lat, lng }) => {
-        this.lat = lat;
-        this.lng = lng;
+        const coordinates = new google.maps.LatLng(lat, lng);
+
+        this.map.setCenter(coordinates);
+
+        const newMarker = new google.maps.Marker({
+          position: coordinates,
+          map: this.map
+        });
+
+        newMarker.setMap(this.map);
       },
       console.error,
       () => subscriptor.unsubscribe()
@@ -51,8 +47,19 @@ export class DashboardComponent implements AfterViewInit, OnInit {
   }
 
   mapInitializer() {
-    this.map = new google.maps.Map(this.gmap.nativeElement, this.mapOptions);
-    this.marker.setMap(this.map);
+    const coordinates = new google.maps.LatLng(this.lat, this.lng);
+
+    const mapOptions: google.maps.MapOptions = {
+      center: coordinates,
+      zoom: 15
+    };
+
+    const marker = new google.maps.Marker({
+      position: coordinates,
+      map: this.map
+    });
+    this.map = new google.maps.Map(this.gmap.nativeElement, mapOptions);
+    marker.setMap(this.map);
   }
 
   logout() {
