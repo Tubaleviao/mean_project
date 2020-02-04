@@ -48,14 +48,16 @@ const addFriend = async (username, friend) => {
   return await db.updateOne({ username }, { $push: { friends: friend } });
 };
 
-  findMatchingUsers,
-  getUsers,
-  saveLocation,
-  uniqueEmail,
-  insert,
-  findUser,
-  addFriend,
-  del,
-  changeUsername,
-  changeEmail
-};
+module.exports = {
+    findMatchingUsers,
+    getUsers,
+    saveLocation,
+    uniqueEmail,
+    insert,
+    findUser,
+    addFriend,
+    del,
+    changeUsername,
+    changeEmail
+  };
+  
