@@ -1,5 +1,4 @@
 import { Injectable } from "@angular/core";
-import { Observable } from "rxjs";
 import { store } from "../store/index";
 import { saveJWT, logout } from "../store/actions";
 
