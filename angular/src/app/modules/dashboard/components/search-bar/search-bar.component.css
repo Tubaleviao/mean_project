@@ -1,0 +1,5 @@
+.search-bar {
+  display: flex;
+  flex: 1;
+  padding: 2px;
+}

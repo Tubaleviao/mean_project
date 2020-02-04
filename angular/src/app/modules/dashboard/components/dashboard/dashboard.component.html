@@ -1,7 +1,15 @@
 <div class="dashboard-viewport" fxLayout="column" fxLayoutAlign="center center">
     <div class="dashboard-toolbar">
-        <p>dashboard works no!</p>
-        <button (click)="logout()">Logout</button>
+        <app-search-bar style="display: flex; flex:1;"></app-search-bar>
+        <mat-menu #appMenu="matMenu">
+            <button mat-menu-item>Settings</button>
+            <button mat-menu-item (click)="logout()">Logout</button>
+        </mat-menu>
+
+        <button mat-mini-fab color="primary">P</button>
+        <button mat-icon-button [matMenuTriggerFor]="appMenu">
+            <mat-icon>more_vert</mat-icon>
+        </button>
     </div>
     <div #mapContainer id="map"></div>
 </div>

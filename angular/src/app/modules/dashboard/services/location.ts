@@ -29,20 +29,23 @@ export class LocationService {
 
   trackLocation(): Observable<Coordinate> {
     return Observable.create(observer => {
+      const successHander = resp =>
+        observer.next({
+          lng: resp.coords.longitude,
+          lat: resp.coords.latitude
+        });
+
+      navigator.geolocation.getCurrentPosition(successHander, error => {
+        observer.error(error);
+        observer.complete();
+      });
+
       const intervalID = setInterval(() => {
-        navigator.geolocation.getCurrentPosition(
-          resp => {
-            observer.next({
-              lng: resp.coords.longitude,
-              lat: resp.coords.latitude
-            });
-          },
-          error => {
-            clearInterval(intervalID);
-            observer.error(error);
-            observer.complete();
-          }
-        );
+        navigator.geolocation.getCurrentPosition(successHander, error => {
+          clearInterval(intervalID);
+          observer.error(error);
+          observer.complete();
+        });
       }, 30000);
     }).pipe(
       distinctUntilChanged(

@@ -3,10 +3,12 @@ import { CommonModule } from "@angular/common";
 import { DashboardRoutingModule } from "./dashboard-routing.module";
 import { DashboardComponent } from "./components/dashboard/dashboard.component";
 import { LocationService } from "./services/location";
+import { AngularMaterialModule } from "src/app/angular-material.module";
+import { SearchBarComponent } from "./components/search-bar/search-bar.component";
 
 @NgModule({
-  declarations: [DashboardComponent],
+  declarations: [DashboardComponent, SearchBarComponent],
   providers: [LocationService],
-  imports: [CommonModule, DashboardRoutingModule]
+  imports: [CommonModule, DashboardRoutingModule, AngularMaterialModule]
 })
 export class DashboardModule {}
