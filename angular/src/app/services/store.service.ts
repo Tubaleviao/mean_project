@@ -14,7 +14,11 @@ export class StoreService {
     return store;
   }
 
-  saveUser(user){
+  getUser() {
+    return this.getState().user;
+  }
+
+  saveUser(user) {
     store.dispatch(saveUser(user));
   }
 
