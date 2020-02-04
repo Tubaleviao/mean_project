@@ -15,6 +15,10 @@ const findUser = async username => await db.findOne({ username })
 const del = async username => await db.deleteOne({ username })
 const getUsers = async () => await db.find().project({ _id: 0, username: 1 }).toArray()
 
+const changeUsername = async (username, newUsername) => {
+    return await db.updateOne({username}, {$set: {username: newUsername}});
+}
+
 const addFriend = async (username, friend) => {
     return await db.updateOne({ username }, { $push: { friends: friend } });
 }
@@ -24,6 +28,6 @@ const saveLocation = async (username, location) => {
 }
 
 module.exports = {
-    getUsers, saveLocation,
+    getUsers, saveLocation, changeUsername,
     uniqueEmail, insert, findUser, addFriend, del
 }
