@@ -78,6 +78,12 @@ router.post("/:id/friends/", auth, async (req, res) => {
   res.json({ success: added ? true : false });
 });
 
+// To verify if the user has the friend already or not
+router.get("/:id/friends/:friendId", auth, async (req, res) => {
+  // const added = await controller.addFriend(req.body.me, req.body.friend);
+  // res.json({ success: added ? true : false });
+});
+
 router.patch("/update-email", async (req, res) => {});
 
 router.delete("/remove/:username", async (req, res) => {
