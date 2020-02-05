@@ -49,7 +49,7 @@ export class StoreService {
   }
 
   getFriendsState(): any {
-    store.getState().friends;
+    return store.getState().friends;
   }
 
   getFriendsData() {
