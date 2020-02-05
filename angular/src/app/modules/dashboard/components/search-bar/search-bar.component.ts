@@ -89,8 +89,17 @@ export class SearchBarComponent implements OnInit, AfterViewInit {
 
           const subs = this.ask.searchUsers(criteria).subscribe(
             users => {
-              this.list = users;
-              console.log("FRIENDS", this.storeService.getFriendsData());
+              const currentFriends = this.storeService
+                .getFriendsData()
+                .map(({ username }) => username);
+
+              this.list = users.map(user => {
+                return {
+                  ...user,
+                  isFriend: currentFriends.includes(user.username)
+                };
+              });
+              console.log("FRIENDS");
             },
             err => {
               console.log(err);

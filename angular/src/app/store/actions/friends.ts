@@ -15,7 +15,7 @@ export const getFriendsRequest = () => ({
 });
 
 export const setFriends = (friends: string[]) => ({
-  type: GET_FRIENDS,
+  type: SET_FRIENDS,
   payload: friends
 });
 

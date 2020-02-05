@@ -53,7 +53,7 @@ export class StoreService {
   }
 
   getFriendsData() {
-    this.getFriendsState().data;
+    return this.getFriendsState().data;
   }
 
   logout() {
