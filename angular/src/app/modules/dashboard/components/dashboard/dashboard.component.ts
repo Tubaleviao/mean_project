@@ -26,7 +26,6 @@ export class DashboardComponent implements AfterViewInit, OnInit {
   ) {}
 
   processFriends(friends) {
-    //     const newMarker = new google.maps.Marker({
     //       position: coordinates,
     //       map: this.map
     //     });
