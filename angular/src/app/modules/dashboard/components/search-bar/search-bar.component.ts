@@ -17,6 +17,7 @@ import {
 } from "rxjs/operators";
 import { AskService } from "src/app/services/ask.service";
 import { StoreService } from "src/app/services/store.service";
+import { IUser } from "src/app/store/types/user.state";
 
 @Component({
   selector: "app-search-bar",
@@ -104,11 +105,10 @@ export class SearchBarComponent implements OnInit, AfterViewInit {
 
           const subs = this.ask.searchUsers(criteria).subscribe(
             users => {
-              const currentFriends = this.storeService
-                .getFriendsData()
-                .map(({ username }) => username);
+              const currentFriends: string[] = this.storeService.getUser()
+                .friends;
 
-              this.list = users.map(user => {
+              this.list = users.map((user: IUser) => {
                 return {
                   ...user,
                   isFriend: currentFriends.includes(user.username)

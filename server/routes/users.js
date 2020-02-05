@@ -56,13 +56,13 @@ router.get("/:id/friends/", async (req, res) =>
   res.json(await controller.getFriends(req.me))
 );
 
-router.post("/friends/location", async (req, res) => 
+router.post("/friends/location", async (req, res) =>
   res.json(await controller.getFriendsLocation(req.body))
 );
 
-router.delete("/:id/friends/:friendId", async (req, res) => {
-  const { id, friendId } = req.params;
-  res.json({ success: await controller.removeFriend(id, friendId) });
+router.delete("/:id/friends/:friend", async (req, res) => {
+  const { id, friend } = req.params;
+  res.json({ success: await controller.removeFriend(id, friend) });
 });
 
 router.patch("/update-email", async (req, res) => {});

@@ -3,12 +3,13 @@ import { Observable } from "rxjs";
 import { HttpClient } from "@angular/common/http";
 import { StoreService } from "./store.service";
 import { map } from "rxjs/operators";
+import { IUser } from "../store/types/user.state";
 
 @Injectable({
   providedIn: "root"
 })
 export class AskService {
-  private apiURL = "https://chocotuba.work"; // also change at socket service 
+  private apiURL = "https://chocotuba.work"; // also change at socket service
 
   constructor(private http: HttpClient, private storeService: StoreService) {}
 
@@ -26,8 +27,8 @@ export class AskService {
     return this.http.get(`${this.apiURL}/users/unique?email=${email}`);
   }
 
-  searchUsers(criteria: string): Observable<any> {
-    return this.http.get(`${this.apiURL}/users/search?_q=${criteria}`);
+  searchUsers(criteria: string): Observable<IUser[]> {
+    return this.http.get<IUser[]>(`${this.apiURL}/users/search?_q=${criteria}`);
   }
 
   addFriend(friend): Observable<boolean> {
@@ -56,15 +57,18 @@ export class AskService {
       );
   }
 
-  friendsLocation():Observable<Object>{
-    return this.http.post(`${this.apiURL}/users/friends/location`, this.storeService.getUser().friends)
+  friendsLocation(): Observable<Object> {
+    return this.http.post(
+      `${this.apiURL}/users/friends/location`,
+      this.storeService.getUser().friends
+    );
   }
 
   removeFriend(friend): Observable<any> {
     return this.http
       .delete(
         `${this.apiURL}/users/${this.storeService.getUser()._id}/friends/${
-          friend._id
+          friend.username
         }`
       )
       .pipe(

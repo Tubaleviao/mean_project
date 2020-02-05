@@ -60,11 +60,11 @@ const addFriend = async (currentUser, friend) => {
   );
 };
 
-const removeFriend = async (currentUserId, friendId) => {
+const removeFriend = async (currentUserId, friend) => {
   const res = await db.updateOne(
     { _id: mongodb.ObjectId(currentUserId) },
     {
-      $pull: { friends: { _id: mongodb.ObjectId(friendId) } }
+      $pull: { friends: friend }
     }
   );
 
@@ -75,11 +75,11 @@ const getFriends = async currentUser =>
   (await db.findOne({ _id: mongodb.ObjectId(currentUser._id) }, { friends: 1 }))
     .friends || [];
 
-const getFriendsLocation = async friends => 
-  await db.find({ username: {$in: friends || []}, location: {$exists: true} })
-  .project({ _id: 0, location: 1, username: 1 }).toArray()
-
-    
+const getFriendsLocation = async friends =>
+  await db
+    .find({ username: { $in: friends || [] }, location: { $exists: true } })
+    .project({ _id: 0, location: 1, username: 1 })
+    .toArray();
 
 module.exports = {
   getFriendsLocation,
