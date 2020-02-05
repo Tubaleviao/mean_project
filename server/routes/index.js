@@ -8,7 +8,11 @@ const {auth, script} = require("../middlewares")
 
 var router = express.Router();
 
-router.get("/maps", script, (req, res, next) => {
+router.get("/", (req, res) => {
+  res.render("index")
+});
+
+router.get("/maps", script, (req, res) => {
   const superagent = require("superagent");
   const url = `https://maps.googleapis.com/maps/api/js?key=${process.env.GOOGLE_KEY}`
   superagent.get(url).then(({ text }) => res.send(text));
