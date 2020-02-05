@@ -40,14 +40,16 @@ router.post("/signin", async (req, res) => {
   const { error } = signinValidation(req.body);
   if (error) res.json({ ok: false, message: error.details[0].message });
 
-  const { friends, ...user } = await controller.findUser(req.body.username);
+  const user = await controller.findUser(req.body.username);
   if (!user) res.json({ ok: false, message: "Username Not Found!" });
-
-  const valid_password = await bcrypt.compare(req.body.password, user.password);
-  if (!valid_password) res.json({ ok: false, message: "Invalid Password!" });
-
-  const token = jwt.sign({ ...user }, process.env.JWT_KEY);
-  res.header("auth-token", token).json({ ok: true, token: token, data: user });
+  else{
+    const valid_password = await bcrypt.compare(req.body.password, user.password);
+    if (!valid_password) res.json({ ok: false, message: "Invalid Password!" });
+    else{
+      const token = jwt.sign({ ...user }, process.env.JWT_KEY);
+      res.header("auth-token", token).json({ ok: true, token: token, data: user });
+    }
+  }
 });
 
 const signinValidation = data => {

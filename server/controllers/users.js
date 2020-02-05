@@ -56,7 +56,7 @@ const changePassword = async (username, newPassword) => {
 const addFriend = async (currentUser, friend) => {
   return await db.updateOne(
     { _id: mongodb.ObjectId(currentUser._id) },
-    { $addToSet: { friends: { ...friend, _id: mongodb.ObjectId(friend._id) } } }
+    { $addToSet: { friends: friend.username } } // ...friend, _id: mongodb.ObjectId(friend._id)
   );
 };
 
@@ -75,7 +75,14 @@ const getFriends = async currentUser =>
   (await db.findOne({ _id: mongodb.ObjectId(currentUser._id) }, { friends: 1 }))
     .friends || [];
 
+const getFriendsLocation = async friends => 
+  await db.find({ username: {$in: friends}, location: {$exists: true} })
+  .project({ _id: 0, location: 1, username: 1 }).toArray()
+
+    
+
 module.exports = {
+  getFriendsLocation,
   findMatchingUsers,
   getUsers,
   getFriends,

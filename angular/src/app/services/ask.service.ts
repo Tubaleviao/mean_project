@@ -8,7 +8,7 @@ import { map } from "rxjs/operators";
   providedIn: "root"
 })
 export class AskService {
-  private apiURL = "https://chocotuba.work"; // also change at socket service
+  private apiURL = "https://chocotuba.work"; // also change at socket service 
 
   constructor(private http: HttpClient, private storeService: StoreService) {}
 
@@ -54,6 +54,10 @@ export class AskService {
           return friends;
         })
       );
+  }
+
+  friendsLocation():Observable<Object>{
+    return this.http.post(`${this.apiURL}/users/friends/location`, this.storeService.getUser().friends)
   }
 
   removeFriend(friend): Observable<any> {

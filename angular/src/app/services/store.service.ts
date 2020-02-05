@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { store } from "../store/index";
-import { saveJWT, logout, saveUser } from "../store/actions/app";
+import { saveJWT, logout, saveUser, addFriend2, removeFriend2 } from "../store/actions/app";
 import {
   addFriend,
   removeFriend,
@@ -38,10 +38,12 @@ export class StoreService {
 
   addFriend(friend) {
     store.dispatch(addFriend(friend));
+    store.dispatch(addFriend2(friend.username));
   }
 
   removeFriend(friend) {
     store.dispatch(removeFriend(friend));
+    store.dispatch(removeFriend2(friend.username));
   }
 
   setFriends(friends: string[]) {

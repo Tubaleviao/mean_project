@@ -35,7 +35,7 @@ app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/", indexRouter);
 app.use("/users", auth, usersRouter);
-app.all("*", (req, res) => res.statusCode(404).send("not found"));
+app.all("*", (req, res) => res.send("not found"));
 
 app.use((err, req, res, next) => {
   if (err) res.json({ msg: "error", error: err });

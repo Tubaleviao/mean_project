@@ -33,6 +33,17 @@ export class DashboardComponent implements AfterViewInit, OnInit {
       .subscribe(this.processFriends, console.error, () =>
         askSubscription.unsubscribe()
       );
+    this.ask.friendsLocation().subscribe(l => { 
+      JSON.parse(JSON.stringify(l)).forEach(o => {
+        var image = 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png';
+        const newMarker = new google.maps.Marker({
+          position: o.location,
+          map: this.map,
+          label: o.username,
+          icon: image
+        });
+      })
+    })
     const subscriptor = this.locationService.trackLocation().subscribe(
       ({ lat, lng }) => {
         const coordinates = new google.maps.LatLng(lat, lng);
