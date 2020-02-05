@@ -21,18 +21,19 @@ router.get("/maps", script, (req, res) => {
 router.post("/signup", async (req, res) => {
   const email_exist = await controller.uniqueEmail(req.body.email);
   if (email_exist) res.json({ message: "This email is already taken!" });
+  else{
+    const salt = await bcrypt.genSalt(10);
+    const hashed_password = await bcrypt.hash(req.body.password, salt);
 
-  const salt = await bcrypt.genSalt(10);
-  const hashed_password = await bcrypt.hash(req.body.password, salt);
+    const new_user = {
+      username: req.body.username,
+      email: req.body.email,
+      password: hashed_password
+    };
 
-  const new_user = {
-    username: req.body.username,
-    email: req.body.email,
-    password: hashed_password
-  };
-
-  const saved_user = await controller.insert(new_user);
-  res.json({ success: "The new user is added!", user: saved_user._id });
+    const saved_user = await controller.insert(new_user);
+    res.json({ success: "The new user is added!", user: saved_user._id });
+  }
 });
 
 router.post("/signin", async (req, res) => {
