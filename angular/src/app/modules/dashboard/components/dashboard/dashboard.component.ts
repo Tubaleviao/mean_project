@@ -25,20 +25,7 @@ export class DashboardComponent implements AfterViewInit, OnInit {
     private storeService: StoreService
   ) {}
 
-  processFriends(friends) {
-    // console.log("friends", friends);
-    // friends.forEach(({ location, username }) => {
-    //   if (location) {
-    //     const { lat, lng } = location;
-    //     const coordinates = new google.maps.LatLng(lat, lng);
-    //     const newMarker = new google.maps.Marker({
-    //       position: coordinates,
-    //       map: this.map
-    //     });
-    //     newMarker.setMap(this.map);
-    //   }
-    // });
-  }
+  processFriends(friends) {}
 
   ngOnInit() {
     const askSubscription = this.ask
