@@ -16,6 +16,7 @@ import {
   distinctUntilChanged
 } from "rxjs/operators";
 import { AskService } from "src/app/services/ask.service";
+import { StoreService } from "src/app/services/store.service";
 
 @Component({
   selector: "app-search-bar",
@@ -36,7 +37,7 @@ export class SearchBarComponent implements OnInit, AfterViewInit {
 
   @ViewChild("searchbar", { static: true }) searchElement: ElementRef;
 
-  constructor(private ask: AskService) {}
+  constructor(private ask: AskService, private storeService: StoreService) {}
 
   ngOnInit() {}
 
@@ -89,6 +90,7 @@ export class SearchBarComponent implements OnInit, AfterViewInit {
           const subs = this.ask.searchUsers(criteria).subscribe(
             users => {
               this.list = users;
+              console.log("FRIENDS", this.storeService.getFriendsData());
             },
             err => {
               console.log(err);
