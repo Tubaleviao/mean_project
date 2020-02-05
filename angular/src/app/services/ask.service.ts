@@ -8,7 +8,7 @@ import { map } from "rxjs/operators";
   providedIn: "root"
 })
 export class AskService {
-  private apiURL = "http://localhost:3000"; // also change at socket service
+  private apiURL = "https://chocotuba.work"; // also change at socket service
 
   constructor(private http: HttpClient, private storeService: StoreService) {}
 
