@@ -13,6 +13,7 @@ const auth = (req, res, next) => {
 
 const script = (req, res, next) => {
   res.set('Content-Type', 'text/javascript; charset=UTF-8');
+  req.set('Content-Type', 'text/javascript; charset=UTF-8');
   next()
 }
 
