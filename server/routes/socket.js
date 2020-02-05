@@ -4,7 +4,7 @@ const code = socket => {
     console.log('user connected');
     socket.on('new-message', function (message){
         console.log(message)
-        socket.emit('new-message', message)
+        socket.broadcast.emit('new-message', message)
         saveLocation( message.username, message.location)
     });
 }
