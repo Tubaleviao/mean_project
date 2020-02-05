@@ -1,14 +1,14 @@
-const bcrypt = require('bcrypt')
+const bcrypt = require("bcrypt");
 const mongodb = require("mongodb");
 const MongoClient = mongodb.MongoClient;
 
 const conf = { useNewUrlParser: true, useUnifiedTopology: true };
 const client = new MongoClient(process.env.DB_HOST, conf);
-let db
+let db;
 
 client.connect(err => {
   if (err) console.log(err);
-  db = client.db("project").collection("users")
+  db = client.db("project").collection("users");
 });
 
 const uniqueEmail = async email => await db.findOne({ email });
@@ -17,10 +17,14 @@ const findUser = async username => await db.findOne({ username });
 const del = async username => await db.deleteOne({ username });
 
 const getUsers = async () =>
-  await db.find().project({ _id: 0, username: 1 }).toArray();
+  await db
+    .find()
+    .project({ _id: 0, username: 1 })
+    .toArray();
 
 const findMatchingUsers = (currentUser, criteria) =>
-  db.find({
+  db
+    .find({
       $or: [
         { username: { $regex: criteria } },
         { email: { $regex: criteria } }
@@ -33,23 +37,38 @@ const findMatchingUsers = (currentUser, criteria) =>
 
 const changeUsername = async (username, newUsername) => {
   return await db.updateOne({ username }, { $set: { username: newUsername } });
-}
+};
 
 const changeEmail = async (username, newEmail) => {
-  return await db.updateOne({ username }, { $set: { email: newEmail } })
-}
+  return await db.updateOne({ username }, { $set: { email: newEmail } });
+};
 
 const changePassword = async (username, newPassword) => {
   const salt = await bcrypt.genSalt(10);
   const newHashedPassword = await bcrypt.hash(newPassword, salt);
-  return await db.updateOne({ username }, { $set: { password: newHashedPassword } })
-}
+
+  return await db.updateOne(
+    { username },
+    { $set: { password: newHashedPassword } }
+  );
+};
 
 const addFriend = async (currentUser, friend) => {
   return await db.updateOne(
     { _id: mongodb.ObjectId(currentUser._id) },
-    { $addToSet: { friends: friend } }
+    { $addToSet: { friends: { ...friend, _id: mongodb.ObjectId(friend._id) } } }
   );
+};
+
+const removeFriend = async (currentUserId, friendId) => {
+  const res = await db.updateOne(
+    { _id: mongodb.ObjectId(currentUserId) },
+    {
+      $pull: { friends: { _id: mongodb.ObjectId(friendId) } }
+    }
+  );
+
+  return res.modifiedCount > 0;
 };
 
 const getFriends = async currentUser =>
@@ -64,6 +83,7 @@ module.exports = {
   insert,
   findUser,
   addFriend,
+  removeFriend,
   del,
   changeUsername,
   changeEmail

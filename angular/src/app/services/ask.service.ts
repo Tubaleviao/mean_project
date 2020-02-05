@@ -56,11 +56,18 @@ export class AskService {
       );
   }
 
-  removeFriend(friendId): Observable<any> {
-    return this.http.delete(
-      `${this.apiURL}/users/${
-        this.storeService.getUser()._id
-      }/friends/${friendId}`
-    );
+  removeFriend(friend): Observable<any> {
+    return this.http
+      .delete(
+        `${this.apiURL}/users/${this.storeService.getUser()._id}/friends/${
+          friend._id
+        }`
+      )
+      .pipe(
+        map(({ success }: { success: boolean }) => {
+          if (success) this.storeService.removeFriend(friend);
+          return success;
+        })
+      );
   }
 }

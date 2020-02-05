@@ -1,5 +1,5 @@
 export interface IFriend {
-  data: string[];
+  data: any[];
   error: string;
   operating: boolean;
 }
