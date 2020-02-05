@@ -1,4 +1,4 @@
-const { saveLocation } = require('../controllers/users')
+const { saveLocation } = require('../controllers/location')
 
 const code = socket => {
     console.log('user connected');

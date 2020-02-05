@@ -1,7 +1,4 @@
 var express = require("express");
-const jwt = require("jsonwebtoken");
-const bcrypt = require("bcrypt");
-const joi = require("@hapi/joi");
 const controller = require("../controllers/users");
 
 var router = express.Router();
@@ -72,19 +69,5 @@ router.delete("/remove/:username", async (req, res) => {
     success: (await controller.del(req.params.username)) ? true : false
   });
 });
-
-const signinValidation = data => {
-  const schema = joi.object({
-    username: joi
-      .string()
-      .min(3)
-      .required(),
-    password: joi
-      .string()
-      .min(5)
-      .required()
-  });
-  return schema.validate(data);
-};
 
 module.exports = router;

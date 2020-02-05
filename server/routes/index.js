@@ -1,5 +1,8 @@
 var express = require("express");
+const joi = require("@hapi/joi");
+const jwt = require("jsonwebtoken");
 
+const controller = require("../controllers/users")
 const {auth} = require("../middlewares")
 
 var router = express.Router();
@@ -40,6 +43,20 @@ router.post("/signin", async (req, res) => {
   const token = jwt.sign({ ...user }, process.env.JWT_KEY);
   res.header("auth-token", token).json({ ok: true, token: token, data: user });
 });
+
+const signinValidation = data => {
+  const schema = joi.object({
+    username: joi
+      .string()
+      .min(3)
+      .required(),
+    password: joi
+      .string()
+      .min(5)
+      .required()
+  });
+  return schema.validate(data);
+};
 
 
 module.exports = router;
