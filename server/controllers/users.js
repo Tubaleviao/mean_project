@@ -76,7 +76,7 @@ const getFriends = async currentUser =>
     .friends || [];
 
 const getFriendsLocation = async friends => 
-  await db.find({ username: {$in: friends}, location: {$exists: true} })
+  await db.find({ username: {$in: friends || []}, location: {$exists: true} })
   .project({ _id: 0, location: 1, username: 1 }).toArray()
 
     
