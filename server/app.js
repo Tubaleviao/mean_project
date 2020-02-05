@@ -17,9 +17,7 @@ if (process.env.NODE_ENV === "prod") {
   server = require("https").createServer(
     {
       key: fs.readFileSync("/etc/letsencrypt/live/chocotuba.work/privkey.pem"),
-      cert: fs.readFileSync(
-        "/etc/letsencrypt/live/chocotuba.work/fullchain.pem"
-      ),
+      cert: fs.readFileSync("/etc/letsencrypt/live/chocotuba.work/fullchain.pem"),
       allowHTTP1: true
     },
     app

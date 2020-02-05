@@ -4,11 +4,11 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require('bcrypt')
 
 const controller = require("../controllers/users")
-const {auth} = require("../middlewares")
+const {auth, script} = require("../middlewares")
 
 var router = express.Router();
 
-router.get("/maps", auth, (req, res, next) => {
+router.get("/maps", auth, script, (req, res, next) => {
   const superagent = require("superagent");
   const url = `https://maps.googleapis.com/maps/api/js?key=${process.env.GOOGLE_KEY}`
   superagent.get(url).then(({ text }) => res.send(text));
