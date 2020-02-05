@@ -26,8 +26,6 @@ export class DashboardComponent implements AfterViewInit, OnInit {
   ) {}
 
   processFriends(friends) {
-    // console.log("friends", friends);
-    // friends.forEach(({ location, username }) => {
     //   if (location) {
     //     const { lat, lng } = location;
     //     const coordinates = new google.maps.LatLng(lat, lng);
