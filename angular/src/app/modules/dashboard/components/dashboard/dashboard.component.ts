@@ -53,7 +53,7 @@ export class DashboardComponent implements AfterViewInit, OnInit {
 
         this.map.setCenter(coordinates);
 
-        this.marker.setPosition({ lat, lng });
+        this.marker.setPosition(coordinates);
       },
       console.error,
       () => subscriptor.unsubscribe()
