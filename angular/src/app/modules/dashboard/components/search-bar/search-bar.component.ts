@@ -58,7 +58,8 @@ export class SearchBarComponent implements OnInit, AfterViewInit {
   addFriend(friend) {
     const index = this.list.indexOf(friend);
     this.list[index] = { ...friend, isPending: true };
-    const subscription = this.ask.addFriend(friend).subscribe(
+    const { isFriend, ...friendObj } = friend;
+    const subscription = this.ask.addFriend(friendObj).subscribe(
       isFriend => {
         this.list[index] = { ...this.list[index], isFriend };
       },
