@@ -1,6 +1,7 @@
 var express = require("express");
 const joi = require("@hapi/joi");
 const jwt = require("jsonwebtoken");
+const bcrypt = require('bcrypt')
 
 const controller = require("../controllers/users")
 const {auth} = require("../middlewares")
