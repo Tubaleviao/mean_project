@@ -51,7 +51,6 @@ module.exports = {
   findMatchingUsers,
   getUsers,
   getFriends,
-  saveLocation,
   uniqueEmail,
   insert,
   findUser,
