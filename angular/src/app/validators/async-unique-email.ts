@@ -17,7 +17,6 @@ export class AsyncUniqueEmailValidator implements AsyncValidator {
   validate(
     ctrl: AbstractControl
   ): Promise<ValidationErrors | null> | Observable<ValidationErrors | null> {
-    console.log("HEY");
     return this.ask.verifyEmail(ctrl.value).pipe(
       map(response =>
         response && response.invalid ? { existingEmail: true } : null
