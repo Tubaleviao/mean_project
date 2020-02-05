@@ -56,7 +56,7 @@ router.get("/:id/friends/", async (req, res) =>
   res.json(await controller.getFriends(req.me))
 );
 
-router.delete("/:id/friends/:friendId", auth, async (req, res) => {
+router.delete("/:id/friends/:friendId", async (req, res) => {
   const { id, friendId } = req.params;
   res.json({ success: await controller.removeFriend(id, friendId) });
 });
