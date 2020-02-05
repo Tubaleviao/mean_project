@@ -1,4 +1,4 @@
-<div class="search-bar">
+<div class="search-bar" (blur)="stopSeach()">
     <div class="main-header" [class.hidden]="isSearching">
         <mat-toolbar-row
             style="padding: 0 5px; display: flex; flex-direction: row; flex:1; align-items: center; justify-content: space-between;"
@@ -20,8 +20,7 @@
                 <mat-icon>search</mat-icon>
             </button>
             <mat-spinner mode="indeterminate" *ngIf="isPending" diameter="30"></mat-spinner>
-            <input class="search-control" type="text" placeholder="Search" [value]="searchKey" #searchbar autofocus
-                (blur)="stopSeach()">
+            <input class="search-control" type="text" placeholder="Search" [value]="searchKey" #searchbar autofocus>
             <button mat-button mat-icon-button (click)="stopSeach()">
                 <mat-icon>close</mat-icon>
             </button>
@@ -36,8 +35,10 @@
                 <div matLine>{{item.username | dotize:15}}</div>
                 <div matLine>{{item.email | dotize:15}}</div>
             </div>
-            <button mat-button color="primary">
-                <mat-icon>add</mat-icon>
+            <button mat-button color="primary" (click)="addFriend(item)" *ngIf="!item.isFriend"
+                [disabled]="item.isPending">
+                <mat-icon *ngIf="!item.isPending">add</mat-icon>
+                <mat-spinner mode="indeterminate" *ngIf="item.isPending" diameter="30"></mat-spinner>
                 <span>Add</span>
             </button>
         </div>

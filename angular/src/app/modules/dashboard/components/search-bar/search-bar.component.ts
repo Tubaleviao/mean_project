@@ -54,6 +54,22 @@ export class SearchBarComponent implements OnInit, AfterViewInit {
     this.list = [];
   }
 
+  addFriend(friend) {
+    const index = this.list.indexOf(friend);
+    this.list[index] = { ...friend, isPending: true };
+    const subscription = this.ask.addFriend(friend).subscribe(
+      isFriend => {
+        this.list[index] = { ...this.list[index], isFriend };
+      },
+      console.error,
+      () => {
+        this.list[index] = { ...this.list[index], isPending: false };
+        subscription.unsubscribe();
+      }
+    );
+    console.log("ADD FRIEND", friend);
+  }
+
   ngAfterViewInit(): void {
     this.subscription = fromEvent<any>(
       this.searchElement.nativeElement,
@@ -72,10 +88,12 @@ export class SearchBarComponent implements OnInit, AfterViewInit {
 
           const subs = this.ask.searchUsers(criteria).subscribe(
             users => {
-              console.log("USERS", users);
               this.list = users;
             },
-            err => console.log(err),
+            err => {
+              console.log(err);
+              this.isPending = false;
+            },
             () => {
               this.isPending = false;
               subs.unsubscribe();

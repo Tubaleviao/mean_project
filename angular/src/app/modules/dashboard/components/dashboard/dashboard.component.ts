@@ -7,6 +7,7 @@ import {
 } from "@angular/core";
 import { StoreService } from "src/app/services/store.service";
 import { LocationService } from "../../services/location";
+import { AskService } from "src/app/services/ask.service";
 @Component({
   selector: "app-dashboard",
   templateUrl: "./dashboard.component.html",
@@ -19,11 +20,21 @@ export class DashboardComponent implements AfterViewInit, OnInit {
   lng = -46.6485777;
 
   constructor(
+    private ask: AskService,
     private locationService: LocationService,
     private storeService: StoreService
   ) {}
 
+  processFriends(friends) {
+    console.log("friends", friends);
+  }
+
   ngOnInit() {
+    const askSubscription = this.ask
+      .loadFriends()
+      .subscribe(this.processFriends, console.error, () =>
+        askSubscription.unsubscribe()
+      );
     const subscriptor = this.locationService.trackLocation().subscribe(
       ({ lat, lng }) => {
         const coordinates = new google.maps.LatLng(lat, lng);

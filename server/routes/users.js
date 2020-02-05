@@ -13,14 +13,11 @@ router.get("/", auth, async (req, res) => {
   res.json(users.map(obj => obj.username));
 });
 
-router.get("/search", auth, async (req, res) => {
-  const { _q } = req.query;
-  if (_q) {
-    return res.json(await controller.findMatchingUsers(_q));
-  }
-
-  res.json([]);
-});
+router.get("/search", auth, async (req, res) =>
+  res.json(
+    req.query._q ? await controller.findMatchingUsers(req.me, req.query._q) : []
+  )
+);
 
 router.get("/:username", async (req, res) => {
   res.json({ ...(await controller.findUser(req.params.username)) });
@@ -47,7 +44,7 @@ router.post("/signin", async (req, res) => {
   const { error } = signinValidation(req.body);
   if (error) res.json({ ok: false, message: error.details[0].message });
 
-  const user = await controller.findUser(req.body.username);
+  const { friends, ...user } = await controller.findUser(req.body.username);
   if (!user) res.json({ ok: false, message: "Username Not Found!" });
 
   const valid_password = await bcrypt.compare(req.body.password, user.password);
@@ -87,9 +84,19 @@ router.patch("/change-email", auth, async (req, res) => {
   res.json({ success: changed ? true : false });
 });
 
-router.patch("/add-friend", auth, async (req, res) => {
-  const added = await controller.addFriend(req.body.me, req.body.friend);
+router.post("/:id/friends/", auth, async (req, res) => {
+  const added = await controller.addFriend(req.me, req.body);
   res.json({ success: added ? true : false });
+});
+
+router.get("/:id/friends/", auth, async (req, res) =>
+  res.json(await controller.getFriends(req.me))
+);
+
+// To verify if the user has the friend already or not
+router.get("/:id/friends/:friend", auth, async (req, res) => {
+  // const added = await controller.addFriend(req.body.me, req.body.friend);
+  // res.json({ success: added ? true : false });
 });
 
 router.patch("/update-email", async (req, res) => {});

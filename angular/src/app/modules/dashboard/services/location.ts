@@ -21,14 +21,17 @@ export class LocationService {
   constructor(
     private ask: AskService,
     private socket: SocketService,
-    private store: StoreService) { }
+    private store: StoreService
+  ) {}
   async getCurrent(): Promise<Coordinate> {
     return new Promise((resolve, reject) => {
       navigator.geolocation.getCurrentPosition(
         resp => {
           const obj = { lng: resp.coords.longitude, lat: resp.coords.latitude };
-          console.log(this.store.getState())
-          const holeObj = { username: this.store.getState().user.username, location: obj}
+          const holeObj = {
+            username: this.store.getUser().username,
+            location: obj
+          };
           this.socket.sendMessage(holeObj);
           resolve(obj);
         },
@@ -48,17 +51,25 @@ export class LocationService {
           lat: resp.coords.latitude
         });
 
-      navigator.geolocation.getCurrentPosition(successHander, error => {
-        observer.error(error);
-        observer.complete();
-      }, options);
-
-      const intervalID = setInterval(() => {
-        navigator.geolocation.getCurrentPosition(successHander, error => {
-          clearInterval(intervalID);
+      navigator.geolocation.getCurrentPosition(
+        successHander,
+        error => {
           observer.error(error);
           observer.complete();
-        }, options);
+        },
+        options
+      );
+
+      const intervalID = setInterval(() => {
+        navigator.geolocation.getCurrentPosition(
+          successHander,
+          error => {
+            clearInterval(intervalID);
+            observer.error(error);
+            observer.complete();
+          },
+          options
+        );
       }, 30000);
     }).pipe(
       distinctUntilChanged(
@@ -66,8 +77,11 @@ export class LocationService {
           prev.lat === curr.lat && prev.lng === curr.lng
       ),
       map(obj => {
-        const holeObj = { username: this.store.getState().user.username, location: obj}
-        this.socket.sendMessage(holeObj)
+        const holeObj = {
+          username: this.store.getUser().username,
+          location: obj
+        };
+        this.socket.sendMessage(holeObj);
         return obj;
       })
     );

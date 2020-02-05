@@ -1,4 +1,5 @@
-const MongoClient = require("mongodb").MongoClient;
+const mongodb = require("mongodb");
+const MongoClient = mongodb.MongoClient;
 const bcrypt = require('bcrypt')
 
 const conf = { useNewUrlParser: true, useUnifiedTopology: true };
@@ -21,12 +22,16 @@ const getUsers = async () =>
     .toArray();
 const saveLocation = (username, location) =>
   db.findOneAndUpdate({ username }, { $set: { location } });
-const findMatchingUsers = criteria =>
+const findMatchingUsers = (currentUser, criteria) =>
   db
     .find({
-      $or: [{ username: { $regex: criteria } }, { email: { $regex: criteria } }]
+      $or: [
+        { username: { $regex: criteria } },
+        { email: { $regex: criteria } }
+      ],
+      _id: { $ne: mongodb.ObjectId(currentUser._id) }
     })
-    .project({ password: 0 })
+    .project({ password: 0, friends: 0 })
     .sort({ username: 1 })
     .toArray();
 
@@ -44,20 +49,27 @@ const changePassword = async (username, newPassword) => {
     return await db.updateOne({ username }, { $set: { password: newHashedPassword } })
 }
 
-const addFriend = async (username, friend) => {
-  return await db.updateOne({ username }, { $push: { friends: friend } });
+const addFriend = async (currentUser, friend) => {
+  return await db.updateOne(
+    { _id: mongodb.ObjectId(currentUser._id) },
+    { $addToSet: { friends: friend } }
+  );
 };
 
+const getFriends = async currentUser =>
+  (await db.findOne({ _id: mongodb.ObjectId(currentUser._id) }, { friends: 1 }))
+    .friends || [];
+
 module.exports = {
-    findMatchingUsers,
-    getUsers,
-    saveLocation,
-    uniqueEmail,
-    insert,
-    findUser,
-    addFriend,
-    del,
-    changeUsername,
-    changeEmail
-  };
-  
+  findMatchingUsers,
+  getUsers,
+  getFriends,
+  saveLocation,
+  uniqueEmail,
+  insert,
+  findUser,
+  addFriend,
+  del,
+  changeUsername,
+  changeEmail
+};
