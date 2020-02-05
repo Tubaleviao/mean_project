@@ -6,6 +6,7 @@ const cors = require("cors");
 const socketIO = require("socket.io");
 const socket = require("./routes/socket");
 
+const {auth} = require("./middlewares")
 var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
 
@@ -35,8 +36,8 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/", indexRouter);
-app.use("/users", usersRouter);
-app.all("*", (req, res) => req.statusCode(404).send("not found"));
+app.use("/users", auth, usersRouter);
+app.all("*", (req, res) => res.statusCode(404).send("not found"));
 
 app.use((err, req, res, next) => {
   if (err) res.json({ msg: "error", error: err });

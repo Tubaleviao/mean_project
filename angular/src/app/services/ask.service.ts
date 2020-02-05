@@ -13,13 +13,13 @@ export class AskService {
   constructor(private http: HttpClient, private storeService: StoreService) {}
 
   signin(json): Observable<any> {
-    return this.http.post(`${this.apiURL}/users/signin`, json, {
+    return this.http.post(`${this.apiURL}/signin`, json, {
       observe: "response"
     });
   }
 
   signup(json): Observable<any> {
-    return this.http.post(`${this.apiURL}/users/signup`, json);
+    return this.http.post(`${this.apiURL}/signup`, json);
   }
 
   verifyEmail(email: string): Observable<any> {
