@@ -68,7 +68,21 @@ export class SearchBarComponent implements OnInit, AfterViewInit {
         subscription.unsubscribe();
       }
     );
-    console.log("ADD FRIEND", friend);
+  }
+
+  removeFriend(friend) {
+    const index = this.list.indexOf(friend);
+    this.list[index] = { ...friend, isPending: true };
+    const subscription = this.ask.removeFriend(friend).subscribe(
+      isRemoved => {
+        this.list[index] = { ...this.list[index], isFriend: !isRemoved };
+      },
+      console.error,
+      () => {
+        this.list[index] = { ...this.list[index], isPending: false };
+        subscription.unsubscribe();
+      }
+    );
   }
 
   ngAfterViewInit(): void {
@@ -99,7 +113,6 @@ export class SearchBarComponent implements OnInit, AfterViewInit {
                   isFriend: currentFriends.includes(user.username)
                 };
               });
-              console.log("FRIENDS");
             },
             err => {
               console.log(err);

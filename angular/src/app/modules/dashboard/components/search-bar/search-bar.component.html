@@ -41,6 +41,12 @@
                 <mat-spinner mode="indeterminate" *ngIf="item.isPending" diameter="30"></mat-spinner>
                 <span>Add</span>
             </button>
+            <button mat-button color="primary" (click)="removeFriend(item)" *ngIf="item.isFriend"
+                [disabled]="item.isPending">
+                <mat-icon *ngIf="!item.isPending">delete</mat-icon>
+                <mat-spinner mode="indeterminate" *ngIf="item.isPending" diameter="30"></mat-spinner>
+                <span>Remove</span>
+            </button>
         </div>
         <mat-list-item *ngIf="(list).length === 0">
             <mat-icon mat-list-avatar>error</mat-icon>

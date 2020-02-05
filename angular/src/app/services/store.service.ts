@@ -37,11 +37,11 @@ export class StoreService {
   }
 
   addFriend(friend) {
-    store.dispatch(addFriend(friend.username));
+    store.dispatch(addFriend(friend));
   }
 
   removeFriend(friend) {
-    store.dispatch(removeFriend(friend.username));
+    store.dispatch(removeFriend(friend));
   }
 
   setFriends(friends: string[]) {

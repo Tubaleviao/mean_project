@@ -14,17 +14,17 @@ export const getFriendsRequest = () => ({
   type: GET_FRIENDS_REQUEST
 });
 
-export const setFriends = (friends: string[]) => ({
+export const setFriends = (friends: any[]) => ({
   type: SET_FRIENDS,
   payload: friends
 });
 
-export const addFriend = (friend: string) => ({
+export const addFriend = (friend: any) => ({
   type: ADD_FRIEND,
   payload: friend
 });
 
-export const removeFriend = (friend: string) => ({
+export const removeFriend = (friend: any) => ({
   type: REMOVE_FRIEND,
   payload: friend
 });

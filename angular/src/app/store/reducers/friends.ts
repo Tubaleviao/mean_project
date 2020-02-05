@@ -24,7 +24,15 @@ export default function reducer(state: IFriend = initialState, action) {
     case ADD_FRIEND:
       return { ...state, data: [...state.data, action.payload] };
     case REMOVE_FRIEND:
-      return { ...state };
+      const idx = state.data.indexOf(
+        state.data.filter(
+          filter => filter.username === action.payload.username
+        )[0]
+      );
+      return {
+        ...state,
+        data: [...state.data.slice(0, idx), ...state.data.slice(idx + 1)]
+      };
     default:
       return state;
   }
