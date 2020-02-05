@@ -1,5 +1,7 @@
+import { IUser } from "./user.state";
+
 export interface IFriend {
-  data: any[];
+  data: IUser[];
   error: string;
   operating: boolean;
 }
