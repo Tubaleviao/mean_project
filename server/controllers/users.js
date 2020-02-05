@@ -1,6 +1,7 @@
 const bcrypt = require('bcrypt')
 
-const db = require('./db')
+let db 
+require('./db').then(db => db = db)
 
 const uniqueEmail = async email => await db.findOne({ email });
 const insert = async new_user => await db.insertOne(new_user);
