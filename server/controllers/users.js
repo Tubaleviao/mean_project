@@ -1,6 +1,6 @@
 const mongodb = require("mongodb");
 const MongoClient = mongodb.MongoClient;
-const bcrypt = require('bcrypt')
+const bcrypt = require("bcrypt");
 
 const conf = { useNewUrlParser: true, useUnifiedTopology: true };
 const client = new MongoClient(process.env.DB_HOST, conf);
@@ -36,24 +36,38 @@ const findMatchingUsers = (currentUser, criteria) =>
     .toArray();
 
 const changeUsername = async (username, newUsername) => {
-    return await db.updateOne({ username }, { $set: {username: newUsername } });
-}
+  return await db.updateOne({ username }, { $set: { username: newUsername } });
+};
 
 const changeEmail = async (username, newEmail) => {
-    return await db.updateOne({ username }, { $set: { email: newEmail } })
-}
+  return await db.updateOne({ username }, { $set: { email: newEmail } });
+};
 
 const changePassword = async (username, newPassword) => {
-    const salt = await bcrypt.genSalt(10);
-    const newHashedPassword = await bcrypt.hash(newPassword, salt);
-    return await db.updateOne({ username }, { $set: { password: newHashedPassword } })
-}
+  const salt = await bcrypt.genSalt(10);
+  const newHashedPassword = await bcrypt.hash(newPassword, salt);
+  return await db.updateOne(
+    { username },
+    { $set: { password: newHashedPassword } }
+  );
+};
 
 const addFriend = async (currentUser, friend) => {
   return await db.updateOne(
     { _id: mongodb.ObjectId(currentUser._id) },
-    { $addToSet: { friends: friend } }
+    { $addToSet: { friends: { ...friend, _id: mongodb.ObjectId(friend._id) } } }
   );
+};
+
+const removeFriend = async (currentUserId, friendId) => {
+  const res = await db.updateOne(
+    { _id: mongodb.ObjectId(currentUserId) },
+    {
+      $pull: { friends: { _id: mongodb.ObjectId(friendId) } }
+    }
+  );
+
+  return res.modifiedCount > 0;
 };
 
 const getFriends = async currentUser =>
@@ -69,6 +83,7 @@ module.exports = {
   insert,
   findUser,
   addFriend,
+  removeFriend,
   del,
   changeUsername,
   changeEmail

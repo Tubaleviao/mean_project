@@ -8,8 +8,8 @@ import { Observable } from "rxjs";
 export class SocketService {
   private socket;
   constructor() {
-    this.socket = io("https://chocotuba.work") // also change at ask service
-   }
+    this.socket = io("http://localhost:3000"); // also change at ask service
+  }
 
   public sendMessage(message) {
     this.socket.emit("new-message", message);

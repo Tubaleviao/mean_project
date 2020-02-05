@@ -94,9 +94,7 @@ router.get("/:id/friends/", auth, async (req, res) =>
 
 router.delete("/:id/friends/:friendId", auth, async (req, res) => {
   const { id, friendId } = req.params;
-  console.log(req.params);
-  const removed = true; // await controller.addFriend(req.body.me, req.body.friend);
-  res.json({ success: removed ? true : false });
+  res.json({ success: await controller.removeFriend(id, friendId) });
 });
 
 router.patch("/update-email", async (req, res) => {});
