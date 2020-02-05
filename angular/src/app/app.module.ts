@@ -16,9 +16,10 @@ import { MainInterceptor } from "./interceptors/main-interceptor";
 import { MatSnackBarModule } from "@angular/material/snack-bar";
 import { SocketService } from "./services/socket.service";
 import { PipesModule } from "./pipes/pipes.module";
+import { ProfileComponent } from './components/profile.component';
 
 @NgModule({
-  declarations: [ AppComponent, SignInComponent, SignUpComponent],
+  declarations: [ AppComponent, ProfileComponent, SignInComponent, SignUpComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,

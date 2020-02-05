@@ -9,6 +9,11 @@ const auth = (req, res, next) => {
   } catch (err) {
     next({ msg: "token not valid", error: err });
   }
-};
+}
 
-module.exports = { auth };
+const script = (req, res, next) => {
+  res.set('Content-Type', 'text/javascript; charset=UTF-8');
+  next()
+}
+
+module.exports = { auth, script };
