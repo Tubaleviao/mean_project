@@ -26,7 +26,6 @@ export class DashboardComponent implements AfterViewInit, OnInit {
   ) {}
 
   processFriends(friends) {
-    //       position: coordinates,
     //       map: this.map
     //     });
     //     newMarker.setMap(this.map);
