@@ -27,7 +27,7 @@ Content-Type: application/json
 POST http://localhost:3000/users/signin HTTP/1.1
 Content-Type: application/json
 
-{"username": "joseph", "password": "yosief }
+{"username": "yosief", "password": "yosief" }
 
 ###
 
@@ -49,5 +49,12 @@ PATCH http://localhost:3000/users/change-email HTTP/1.1
 Content-Type: application/json
 
 { "username": "joseph", "newEmail": "yosief@mum.com" }
+
+###
+
+PATCH http://localhost:3000/users/change-password HTTP/1.1
+Content-Type: application/json
+
+{ "username": "yosief", "newPassword": "yosief" }
 
 

@@ -1,5 +1,6 @@
 require('dotenv').config()
-let http = require('http');
+const fs = require('fs')
+let http = require('https');
 var express = require('express');
 var path = require('path');
 const cors = require('cors')
@@ -10,7 +11,7 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
 var app = express();
-let server = http.createServer(app);
+let server = http.createServer({key: fs.readFileSync("/etc/letsencrypt/live/chocotuba.work/privkey.pem"), cert: fs.readFileSync("/etc/letsencrypt/live/chocotuba.work/fullchain.pem"), allowHTTP1: true}, app);
 let io = socketIO(server);
 
 app.use(cors())

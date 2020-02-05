@@ -18,7 +18,7 @@ import { SocketService } from "./services/socket.service";
 import { PipesModule } from "./pipes/pipes.module";
 
 @NgModule({
-  declarations: [AppComponent, SignInComponent, SignUpComponent],
+  declarations: [ AppComponent, SignInComponent, SignUpComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
