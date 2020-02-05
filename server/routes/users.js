@@ -15,7 +15,7 @@ router.get("/search", async (req, res) =>
 );
 
 router.get("/:username", async (req, res) => {
-  res.json(await controller.findUser(req.params.username));
+  res.json({ ...(await controller.findUser(req.params.username)) });
 });
 
 router.get("/unique", async (req, res) => {

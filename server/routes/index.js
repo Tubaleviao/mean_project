@@ -41,6 +41,8 @@ router.post("/signin", async (req, res) => {
   if (error) res.json({ ok: false, message: error.details[0].message });
 
   const user = await controller.findUser(req.body.username);
+  console.log(user)
+  console.log(req.body.username)
   if (!user) res.json({ ok: false, message: "Username Not Found!" });
   else{
     const valid_password = await bcrypt.compare(req.body.password, user.password);
