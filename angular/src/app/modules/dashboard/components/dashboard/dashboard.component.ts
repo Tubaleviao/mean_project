@@ -18,6 +18,7 @@ export class DashboardComponent implements AfterViewInit, OnInit {
   map: google.maps.Map;
   lat = -23.5577311;
   lng = -46.6485777;
+  marker;
 
   constructor(
     private ask: AskService,
@@ -33,29 +34,26 @@ export class DashboardComponent implements AfterViewInit, OnInit {
       .subscribe(this.processFriends, console.error, () =>
         askSubscription.unsubscribe()
       );
-    this.ask.friendsLocation().subscribe(l => { 
+    this.ask.friendsLocation().subscribe(l => {
       JSON.parse(JSON.stringify(l)).forEach(o => {
-        var image = 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png';
+        var image =
+          "https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png";
         const newMarker = new google.maps.Marker({
           position: o.location,
           map: this.map,
           label: o.username,
           icon: image
         });
-      })
-    })
+      });
+    });
+
     const subscriptor = this.locationService.trackLocation().subscribe(
       ({ lat, lng }) => {
         const coordinates = new google.maps.LatLng(lat, lng);
 
         this.map.setCenter(coordinates);
 
-        const newMarker = new google.maps.Marker({
-          position: coordinates,
-          map: this.map
-        });
-
-        newMarker.setMap(this.map);
+        this.marker.setPosition({ lat, lng });
       },
       console.error,
       () => subscriptor.unsubscribe()
@@ -74,12 +72,12 @@ export class DashboardComponent implements AfterViewInit, OnInit {
       zoom: 15
     };
 
-    const marker = new google.maps.Marker({
+    this.marker = new google.maps.Marker({
       position: coordinates,
       map: this.map
     });
     this.map = new google.maps.Map(this.gmap.nativeElement, mapOptions);
-    marker.setMap(this.map);
+    this.marker.setMap(this.map);
   }
 
   logout() {
