@@ -25,10 +25,7 @@ export class DashboardComponent implements AfterViewInit, OnInit {
     private storeService: StoreService
   ) {}
 
-  processFriends(friends) {
-    //   }
-    // });
-  }
+  processFriends(friends) {}
 
   ngOnInit() {
     const askSubscription = this.ask
