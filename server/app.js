@@ -46,4 +46,5 @@ app.use((err, req, res, next) => {
 io.on("connection", socket.code);
 
 // this works with socket
-server.listen(3000, () => console.log("Resting at 3000"));
+server.listen(process.env.PORT, () => console.log(`Resting at ${process.env.PORT}`))
+
