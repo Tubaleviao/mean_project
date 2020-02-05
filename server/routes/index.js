@@ -1,6 +1,6 @@
 var express = require("express");
 
-const {auth} = require("./middlewares")
+const {auth} = require("../middlewares")
 
 var router = express.Router();
 
