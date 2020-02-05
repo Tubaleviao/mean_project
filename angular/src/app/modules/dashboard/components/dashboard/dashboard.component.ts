@@ -25,14 +25,16 @@ export class DashboardComponent implements AfterViewInit, OnInit {
     private storeService: StoreService
   ) {}
 
+  processFriends(friends) {
+    console.log("friends", friends);
+  }
+
   ngOnInit() {
-    const askSubscription = this.ask.loadFriends().subscribe(
-      data => {
-        console.log(data);
-      },
-      console.error,
-      () => askSubscription.unsubscribe()
-    );
+    const askSubscription = this.ask
+      .loadFriends()
+      .subscribe(this.processFriends, console.error, () =>
+        askSubscription.unsubscribe()
+      );
     const subscriptor = this.locationService.trackLocation().subscribe(
       ({ lat, lng }) => {
         const coordinates = new google.maps.LatLng(lat, lng);

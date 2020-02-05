@@ -30,7 +30,7 @@ const findMatchingUsers = (currentUser, criteria) =>
       ],
       _id: { $ne: mongodb.ObjectId(currentUser._id) }
     })
-    .project({ password: 0 })
+    .project({ password: 0, friends: 0 })
     .sort({ username: 1 })
     .toArray();
 
@@ -49,9 +49,14 @@ const addFriend = async (currentUser, friend) => {
   );
 };
 
+const getFriends = async currentUser =>
+  (await db.findOne({ _id: mongodb.ObjectId(currentUser._id) }, { friends: 1 }))
+    .friends || [];
+
 module.exports = {
   findMatchingUsers,
   getUsers,
+  getFriends,
   saveLocation,
   uniqueEmail,
   insert,

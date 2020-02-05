@@ -45,11 +45,12 @@ export class AskService {
   }
 
   loadFriends() {
+    this.storeService.getFriendsRequest();
     return this.http
       .get(`${this.apiURL}/users/${this.storeService.getUser()._id}/friends`)
       .pipe(
         map((friends: string[]) => {
-          this.storeService.setFriends(friends);
+          if (friends.length > 0) this.storeService.setFriends(friends);
           return friends;
         })
       );
