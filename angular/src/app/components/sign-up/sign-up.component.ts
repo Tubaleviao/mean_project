@@ -2,6 +2,8 @@ import { Component, OnInit } from "@angular/core";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { AskService } from "src/app/services/ask.service";
 import { AsyncUniqueEmailValidator } from "src/app/validators/async-unique-email";
+import {MatSnackBar} from "@angular/material/snack-bar"
+import { Router } from "@angular/router";
 
 @Component({
   selector: "app-sign-up",
@@ -17,7 +19,9 @@ export class SignUpComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private ask: AskService,
-    emailValidator: AsyncUniqueEmailValidator
+    emailValidator: AsyncUniqueEmailValidator,
+    private snackBar: MatSnackBar,
+    private router: Router,
   ) {
     this.signUpForm = this.fb.group({
       username: ["", [Validators.required, Validators.minLength(4)]],
@@ -49,10 +53,13 @@ export class SignUpComponent implements OnInit {
   ngOnInit() {}
 
   onSubmit() {
-    // TODO: Use EventEmitter with form value
-    console.warn(this.signUpForm.value);
     this.ask
       .signup(Object.assign({}, this.signUpForm.value))
-      .subscribe(console.log);
+      .subscribe(m => {
+        this.snackBar.open(m, "Close", {
+          duration: 2000
+        })
+        this.router.navigate(["login"]);
+      });
   }
 }
