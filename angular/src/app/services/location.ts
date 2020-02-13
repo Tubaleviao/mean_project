@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
-import { AskService } from "src/app/services/ask.service";
-import { StoreService } from "src/app/services/store.service";
+import { AskService } from "../services/ask.service";
+import { StoreService } from "../services/store.service";
 import { Observable } from "rxjs";
 import { distinctUntilChanged, map } from "rxjs/operators";
 import { SocketService } from "src/app/services/socket.service";

@@ -1,6 +1,6 @@
 import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
-import { DashboardComponent } from "./components/dashboard/dashboard.component";
+import { DashboardComponent } from "../components/dashboard/dashboard.component";
 import { AuthenticatedGuard } from "src/app/guards/authenticated.guard";
 
 const routes: Routes = [
@@ -17,3 +17,4 @@ const routes: Routes = [
   exports: [RouterModule]
 })
 export class DashboardRoutingModule {}
+
